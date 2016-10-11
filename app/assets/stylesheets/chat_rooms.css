@@ -1,0 +1,13 @@
+.chat-room .messages {
+  min-height: 125px;
+  overflow-y: scroll;
+  border: 1px solid;
+  width: 50%;
+  margin-left: 0;
+}
+
+.message-textarea {
+  width: 50%;
+  height: 141px;
+  margin-left: 0px;
+}
