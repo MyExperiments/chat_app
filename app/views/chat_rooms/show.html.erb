@@ -1,13 +1,17 @@
 <div class="col-lg-12 chat-room">
   <div class="container messages">
-    <% @chat_room.messages.each do |message| %>
-      <div class="col-lg-12">
-        <span><%= message.user.email %> : </span>
-        <span><%= message.content %></span>
-      </div>
-    <% end %>
+    <div class="message-container">
+      <% @chat_room.messages.each do |message| %>
+        <div class="col-lg-12">
+          <span><%= message.user.email %> : </span>
+          <span><%= message.content %></span>
+        </div>
+      <% end %>
+    </div>
+    <div class="is-typing">
+    </div>
   </div>
-  <textarea class="message-textarea" data-room-id="<%= @chat_room.id%>" data-behavior="room-speaker"></textarea>
+  <textarea class="message-textarea" data-room-id="<%= @chat_room.id%>" data-behavior="room-speaker" data-current-user-id="<%= current_user.id %>"></textarea>
 </div>
 
 <script type="text/javascript">

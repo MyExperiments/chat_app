@@ -23,4 +23,12 @@ class MessagesChannel < ApplicationCable::Channel
       content: data['message']
     )
   end
+
+  def typing?(data)
+    uuid = ChatRoom.find(data['room_id']).uuid
+    ActionCable.server.broadcast(
+      "messages_channel_#{uuid}", user: current_user.email, type: 'status',
+                                  typed_by: current_user.id
+    )
+  end
 end
