@@ -50,7 +50,7 @@
         <% if user_signed_in? %>
           <span class="pull-right m-t-15">
             <%= current_user.email %>
-            <%= link_to 'Logout', destroy_user_session_path(current_user), method: :delete %>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
           </span>
         <% end %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">

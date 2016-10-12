@@ -6,7 +6,8 @@ CreateMessageChannel = function(roomId) {
     connected: function() {},
     disconnected: function() {},
     received: function(data) {
-      return $('.messages').append(receivedMessage(data));
+      var message = '<div class="col-lg-12"><span>' + data['user'] + ': </span><span>' + data['message'] + '</span></div>';
+      return $('.messages').append(message);
     },
     speak: function(message, roomId) {
       return this.perform('speak', {
@@ -14,9 +15,7 @@ CreateMessageChannel = function(roomId) {
         room_id: roomId
       });
     },
-    receivedMessage: function(data) {
-      return '<span>' + data['url'] + ': </span><span>' + data['message'] + '</span>';
-    }
+
   });
 };
 
