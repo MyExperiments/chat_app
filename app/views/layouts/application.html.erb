@@ -47,13 +47,18 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">ChatApp</a>
+        <% if user_signed_in? %>
+          <span class="pull-right m-t-15">
+            <%= current_user.email %>
+            <%= link_to 'Logout', destroy_user_session_path(current_user), method: :delete %>
+          </span>
+        <% end %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <!-- Add header menus here -->
           </ul>
         </div>
       </div>
-      <%= link_to 'Logout', destroy_user_session_path(current_user), method: :delete %>
     </div>
 
     <div class="container">

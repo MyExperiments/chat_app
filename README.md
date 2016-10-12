@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version - 2.3.0
 
-Things you may want to cover:
+* Rails version - 5.0.0
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Application setup instructions
+* * Copy database.yml.example to database.yml and provide valid details
+* * Copy cable.yml.example to cable.yml and provide valid details
+* * Copy secrets.yml.example to secrets.yml
+* * Run - bundle install
+* * Run - rake db:setup
