@@ -5,6 +5,7 @@ module Api
   # @author sufinsha
   #
   class BaseApiController < ApplicationController
+    include SelectCurrentUser
     skip_before_action :verify_authenticity_token
     skip_before_action :authenticate_user!
 
@@ -22,13 +23,7 @@ module Api
         success: false, message: 'Invalid access'
       }
     end
-
-    def set_current_user
-      authenticate_or_request_with_http_token do |token, _options|
-        @current_user = User.find_by(authentication_token: token)
-      end
-    end
-
+    
     def default_success_flag
       @success = true
       @message = nil
