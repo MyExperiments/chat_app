@@ -2,9 +2,14 @@
   "name": "List All Users",
   "end_point": "/api/v1/users.json",
   "http_method": "GET",
-  "params": ["authentication_token"],
+  "params": [],
   "examples": [{
-    "request": {},
+    "request": {
+      "headers": {
+        "Content-Type" : "application/json",
+        "Authorization" : "Token token=TCa8GZdzeMjSC_jzHzsk"
+      }
+    },
     "response": {
       "success": true,
   		"users": [

@@ -17,16 +17,16 @@ module Api
     private
 
     def authenticate_current_user
-      if @current_user.blank?
-        render json: {
-          success: false, message: 'Invalid access'
-        }
-      end
+      return if @current_user.present?
+      render json: {
+        success: false, message: 'Invalid access'
+      }
     end
 
     def set_current_user
-      @current_user = User.find_by(
-        authentication_token: params[:authentication_token])
+      authenticate_or_request_with_http_token do |token, _options|
+        @current_user = User.find_by(authentication_token: token)
+      end
     end
 
     def default_success_flag
