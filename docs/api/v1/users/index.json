@@ -1,0 +1,22 @@
+{
+  "name": "List All Users",
+  "end_point": "/api/v1/users.json",
+  "http_method": "GET",
+  "params": ["authentication_token"],
+  "examples": [{
+    "request": {},
+    "response": {
+      "success": true,
+  		"users": [
+        {
+          "id": 1,
+          "email": "test1@test.com"
+        },
+        {
+          "id": 2,
+          "email": "test2@test.com",
+        }
+      ]
+    }
+  }]
+}
