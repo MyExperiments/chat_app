@@ -4,7 +4,10 @@ module Api
   #
   # @author sufinsha
   #
-  class BaseApiController < ActionController::API
+  class BaseApiController < ApplicationController
+    skip_before_action :verify_authenticity_token
+    skip_before_action :authenticate_user!
+
     before_action :set_current_user
     before_action :authenticate_current_user
     before_action :default_success_flag
