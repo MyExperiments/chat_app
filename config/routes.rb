@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   root 'home#index'
 
   mount ActionCable.server => '/cable'
+
+  mount Apidoco::Engine, at: '/docs'
 end

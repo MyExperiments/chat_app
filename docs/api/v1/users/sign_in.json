@@ -1,0 +1,21 @@
+{
+  "name": "Sign In User",
+  "end_point": "/users/sign_in.json",
+  "http_method": "POST",
+  "params": ["email", "password"],
+  "examples": [{
+    "request": {
+    	"email" : "test@test.com",
+    	"password": "password"
+    },
+    "success-response": {
+    	"success": true,
+		"message": "Signed in successfully.",
+		"authentication_token": "7T2hKgpjk1qysBsW3mxj"
+    },
+    "success-failure": {
+    	"success": false,
+		"message": "Invalid email or password."
+    }
+  }]
+}
