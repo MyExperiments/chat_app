@@ -14,12 +14,12 @@
       "success": true,
   		"users": [
         {
-          "id": 1,
-          "email": "test1@test.com"
+          "id" : 1,
+          "email" : "test1@test.com"
         },
         {
-          "id": 2,
-          "email": "test2@test.com",
+          "id" : 2,
+          "email" : "test2@test.com"
         }
       ]
     }
