@@ -1,0 +1,26 @@
+{
+  "name": "Create Chatroom",
+  "end_point": "/api/v1/chat_rooms.json",
+  "http_method": "POST",
+  "params": ["is_group_chat", "user_id", "room_uuid"],
+  "examples": [{
+    "request": {
+      "headers": {
+        "Content-Type" : "application/json",
+        "Authorization" : "Token token=TCa8GZdzeMjSC_jzHzsk"
+      },
+      "params": {
+        "is_group_chat": "false",
+        "user_id": "id",
+        "room_uuid": ""
+      }
+    },
+    "response": {
+      "success": true,
+      "message": null,
+      "id": 16,
+      "uuid": "ce66ae71-864a-4c2e-9b31-cb15fad8f13c",
+      "messages": ""
+    }
+  }]
+}
