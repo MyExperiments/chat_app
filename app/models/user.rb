@@ -13,4 +13,9 @@ class User < ApplicationRecord
   def set_authentication_token(token = Devise.friendly_token)
     self.authentication_token = token
   end
+
+  # search email with pattern
+  def self.search_users(pattern)
+    where('email LIKE ?', "#{pattern}%")
+  end
 end

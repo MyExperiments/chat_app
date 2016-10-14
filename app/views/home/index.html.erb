@@ -3,6 +3,7 @@
 <div class="col-lg-3">
   <div class="well sidebar-nav">
     <h3>Users</h3>
+    <%=text_field_tag :email,nil,class:'form-control'%>
     <ul class="nav nav-list">
       <% @users.each do |user| %>
         <li><%= link_to user.email, chat_rooms_path(is_group_chat: false, user_id: user.id), method: :post %></li>
@@ -10,3 +11,12 @@
     </ul>
   </div><!--/.well -->
 </div>
+
+<script>
+  var availableTags = '<%= home_auto_complete_users_path(:json) %>';
+  $( function() {
+    $( "#email" ).autocomplete({
+      source: availableTags
+    });
+  } );
+</script>

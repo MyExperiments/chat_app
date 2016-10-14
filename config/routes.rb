@@ -10,10 +10,13 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:index, :show]
+      resources :chat_rooms, only: [:create]
     end
   end
 
   root 'home#index'
+
+  get 'home/auto_complete_users'
 
   mount ActionCable.server => '/cable'
 
