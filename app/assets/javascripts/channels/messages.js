@@ -39,11 +39,11 @@ CreateMessageChannel = function(roomId) {
 
 $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   if (event.keyCode === 13) {
-    App.messages.speak(event.target.value, $(this).data('room-id'));
+    App.messages.speak(event.target.value, $(this).data('room-uuid'));
     event.target.value = "";
     event.preventDefault();
   }
   else{
-    App.messages.isTyping($(this).data('room-id'))
+    App.messages.isTyping($(this).data('room-uuid'))
   }
 });
