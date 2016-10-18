@@ -16,7 +16,11 @@ class ChatRoomsController < ApplicationController
 
   def create
     initialize_chat_room
-
-    redirect_to chat_room_path(@chat_room)
+    @chat_room_html = render_to_string('_show', formats: [:html], layout: false, locals: { chat_room: @chat_room })
+    if request.xhr?
+      render partial: 'show', locals: { chat_room: @chat_room }
+    else
+      redirect_to chat_room_path(@chat_room)
+    end
   end
 end

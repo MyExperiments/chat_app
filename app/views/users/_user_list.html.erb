@@ -1,0 +1,3 @@
+<% users.each do |user| %>
+  <li><%= link_to user.email, '#', class: 'chat-room-link', data: { is_group_chat: false, user_id: user.id } %></li>
+<% end %>

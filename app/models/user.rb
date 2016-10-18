@@ -15,7 +15,7 @@ class User < ApplicationRecord
   end
 
   # search email with pattern
-  def self.search_users(pattern)
-    where('email LIKE ?', "#{pattern}%")
+  def self.search_users(pattern, current_user_id)
+    where('email LIKE ? AND id != ?', "#{pattern}%", current_user_id)
   end
 end

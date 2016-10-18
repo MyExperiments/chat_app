@@ -9,7 +9,6 @@ class MessagesChannel < ApplicationCable::Channel
   end
 
   def received
-
   end
 
   def unsubscribed

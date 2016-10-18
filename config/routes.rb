@@ -3,7 +3,13 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :home, only: [:index]
+  resources :home, only: [:index] do
+    collection do
+      get 'search_user'
+    end
+  end
+
+  resources :users, only: [:index]
 
   resources :chat_rooms, only: [:show, :create]
 
@@ -15,8 +21,6 @@ Rails.application.routes.draw do
   end
 
   root 'home#index'
-
-  get 'home/auto_complete_users'
 
   mount ActionCable.server => '/cable'
 
