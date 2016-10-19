@@ -32,8 +32,9 @@ class MessagesChannel < ApplicationCable::Channel
     return if chat_room.blank?
 
     ActionCable.server.broadcast(
-      "messages_channel_#{chat_room.uuid}", user: current_user.email, type: 'status',
-                                  typed_by: current_user.id
+      "messages_channel_#{chat_room.uuid}",
+      user: current_user.email,
+      type: 'status', typed_by: current_user.id
     )
   end
 

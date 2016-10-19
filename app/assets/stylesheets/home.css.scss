@@ -1,8 +1,22 @@
-// Style  for loader
+// style  for loader
 .loader {
 
     background-image: image-url("loader.gif");
     height:40px;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+// style for online image
+.online {
+    background-image: image-url("online.png");
+    height:20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+//style for users list
+
+.user-listing {
+  padding: 10px 0 10px 0
 }

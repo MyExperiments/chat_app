@@ -18,4 +18,14 @@ class User < ApplicationRecord
   def self.search_users(pattern, current_user_id)
     where('email LIKE ? AND id != ?', "#{pattern}%", current_user_id)
   end
+
+  # set online true
+  def self.appear
+    self.online = true
+  end
+
+  # set online false
+  def self.disappear
+    self.online = false
+  end
 end

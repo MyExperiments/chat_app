@@ -11,7 +11,7 @@
     <div class="is-typing">
     </div>
   </div>
-  <textarea class="message-textarea" data-room-id="<%= @chat_room.id%>" data-behavior="room-speaker" data-current-user-id="<%= current_user.id %>"></textarea>
+  <textarea class="message-textarea" data-room-id="<%= @chat_room.id %>" data-behavior="room-speaker" data-room-uuid="<%= @chat_room.uuid %>" data-current-user-id="<%= current_user.id %>"></textarea>
 </div>
 
 <script type="text/javascript">
