@@ -16,7 +16,6 @@ class ChatRoomsController < ApplicationController
 
   def create
     initialize_chat_room
-    @chat_room_html = render_to_string('_show', formats: [:html], layout: false, locals: { chat_room: @chat_room })
     if request.xhr?
       render partial: 'show', locals: { chat_room: @chat_room }
     else

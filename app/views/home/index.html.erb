@@ -1,12 +1,26 @@
-<div class="col-lg-9 chat-room-container">
+<div class="col-lg-8 chat-room-container">
 </div>
-<div class="col-lg-3">
+<div class="col-lg-4">
   <div class="well sidebar-nav">
-    <h3>Users</h3>
-    <%= text_field_tag :email, nil, class: 'form-control', autocomplete: 'off' %>
-    <div class='loader'></div>
-    <ul class="nav nav-list users-list">
-      <%= render partial:'users/user_list', locals: { users: @users } %>
-    </ul>
+    <div id= "tabs">
+      <ul>
+        <li><a href="#tabs-1">Friends</a></li>
+        <li><a href="#tabs-2">Requests</a></li>
+        <li><a href="#tabs-3">Users</a></li>
+      </ul>
+      <div id="tabs-1">
+        <%= text_field_tag :name, nil, class: 'form-control', autocomplete: 'off' %>
+        <div class='loader'></div>
+        <ul class="nav nav-list users-list">
+          <%= render partial:'users/friend_list', locals: { users: @friends } %>
+        </ul>
+      </div>
+      <div id="tabs-2">
+        <%= render partial:'users/friend_request', locals: { users: @friend_requests } %>
+      </div>
+      <div id="tabs-3">
+        <%= render partial:'users/users_listing', locals: { users: @users } %>
+      </div>
+    </div>
   </div><!--/.well -->
 </div>

@@ -9,8 +9,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:index]
-
+  resources :users, only: [:index] do
+    collection do
+      get 'friend_request'
+      get 'cancel_request'
+      get 'accept_request'
+      get 'unfriend_user'
+    end
+  end
   resources :chat_rooms, only: [:show, :create]
 
   namespace :api do

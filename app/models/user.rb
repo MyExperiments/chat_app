@@ -4,6 +4,8 @@
 # @author sufinsha
 #
 class User < ApplicationRecord
+  after_create :create_user_node
+  after_update :update_user_node, if: :name_changed?
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -15,17 +17,18 @@ class User < ApplicationRecord
   end
 
   # search email with pattern
-  def self.search_users(pattern, current_user_id)
-    where('email LIKE ? AND id != ?', "#{pattern}%", current_user_id)
+  def self.search_users(pattern)
+    where('name LIKE ?', "#{pattern}%")
   end
 
-  # set online true
-  def self.appear
-    self.online = true
+  # creating new user node
+  def create_user_node
+    UserNode.create(name: name, user_id: id)
   end
 
-  # set online false
-  def self.disappear
-    self.online = false
+  # editing user node
+  def update_user_node
+    user_node = UserNode.find_by(user_id: id)
+    user_node.update(name: name) unless user_node.nil?
   end
 end

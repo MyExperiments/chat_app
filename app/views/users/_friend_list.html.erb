@@ -1,0 +1,13 @@
+<% users.each do |user| %>
+  <div class="row user-listing-<%=user.id%> friend_listing">
+    <div class="col-md-6"><li><%= link_to user.name, '#', class: 'chat-room-link', data: { is_group_chat: false, user_id: user.id } %></li></div>
+    <div class="col-md-2" id = "user_<%=user.id%>">
+      <% if user.online? %>
+        <div class="online"></div>
+      <% end %>
+    </div>
+    <div class="col-md-4"> 
+      <%= link_to 'Un-friend', '#' ,class: "btn btn-danger btn-sm un-friend", data: {user_id: user.id} %>
+    </div>
+  </div>
+<% end %>
