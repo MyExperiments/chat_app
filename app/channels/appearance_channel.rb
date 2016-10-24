@@ -10,7 +10,7 @@ class AppearanceChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(
       'appearance_channel',
       user_id: current_user.id,
-      appear: true
+      is_online: true
     )
   end
 
@@ -22,7 +22,7 @@ class AppearanceChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(
       'appearance_channel',
       user_id: current_user.id,
-      appear: false
+      is_online: false
     )
     # Any cleanup needed when channel is unsubscribed
   end
