@@ -72,6 +72,7 @@ $(function() {
   //Ajax request for accept friend
   $(document).on('click', '.accept-request', function( event ) {
     var userId = $( this ).attr('data-user-id');
+    var userName = $('.user-listing-' + userId).find('.friend-request-name').text();
     event.preventDefault();
     $.ajax({
       type:'GET',
@@ -79,6 +80,8 @@ $(function() {
       data: {user_id: userId},
       success: function(result){ 
         $('.user-listing-' + userId).remove();
+        $('.user-listing-container-' + userId).remove();
+        appendFriend(userId, userName);
       }
     });
   });
@@ -86,13 +89,15 @@ $(function() {
   //Ajax request for unfriend
   $(document).on('click', '.un-friend', function( event ) {
     var userId = $( this ).attr('data-user-id');
+    var userName = $('.user-listing-' + userId).find('.chat-room-link').text();
     event.preventDefault();
     $.ajax({
       type:'GET',
       url:'/users/unfriend_user',
       data: {user_id: userId},
-      success: function(result){ 
+      success: function(){ 
         $('.user-listing-' + userId).remove();
+        unfriend(userId, userName)
       }
     });
   });

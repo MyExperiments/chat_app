@@ -1,5 +1,5 @@
 #
-# HomeHelper
+# UserHelper
 #
 # @author rashid
 #

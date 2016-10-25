@@ -1,5 +1,5 @@
 <% users.each do |user| %>
-  <div class="row user-listing">
+  <div class="row user-listing user-listing-container-<%= user.id %>">
     <div class="col-md-6"><%= user.name %></div>
     <div class="col-md-6 add-friend-container-<%= user.id %>"> 
       <%= friend_request_exist(user.id, current_user.id) %>

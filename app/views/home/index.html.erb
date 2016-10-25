@@ -16,10 +16,14 @@
         </ul>
       </div>
       <div id="tabs-2">
-        <%= render partial:'users/friend_request', locals: { users: @friend_requests } %>
+        <div class='friend-request-container'>
+          <%= render partial:'users/friend_request', locals: { users: @friend_requests } %>
+        </div>
       </div>
       <div id="tabs-3">
-        <%= render partial:'users/users_listing', locals: { users: @users } %>
+        <div class="user-listing-container">
+          <%= render partial:'users/users_listing', locals: { users: @users } %>
+        </div>
       </div>
     </div>
   </div><!--/.well -->

@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   def friend_request
     select_nodes
     @requestee_node.friend_requests << @requester_node
+    broadcast_friend_request
     if request.xhr?
       render partial: 'users/cancel_request', locals: { user_id: @requestee_node.user_id }
     else
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
     select_nodes
     requester_node = @requester_node
     @requestee_node.friend_requests(:requester_node, :rel).match_to(requester_node).delete_all(:rel)
+    broadcast_cancel_request
     if request.xhr?
       render partial: 'users/send_request', locals: { user_id: @requestee_node.user_id }
     else
@@ -40,6 +42,7 @@ class UsersController < ApplicationController
     requestee_node = @requestee_node
     @requestee_node.friends << @requester_node
     @requester_node.friend_requests(:requestee_node, :rel).match_to(requestee_node).delete_all(:rel)
+    broadcast_request_acceptance
     render json: { status: 'success' }
   end
 
@@ -48,6 +51,7 @@ class UsersController < ApplicationController
     select_nodes
     requestee_node = @requestee_node
     @requester_node.friends(:requestee_node, :rel).match_to(requestee_node).delete_all(:rel)
+    broadcast_unfriend
     render json: { status: 'success' }
   end
 
@@ -62,5 +66,44 @@ class UsersController < ApplicationController
   def select_nodes
     @requestee_node = UserNode.find_by(user_id: params[:user_id])
     @requester_node = UserNode.find_by(user_id: current_user.id)
+  end
+
+  # Broadcast friend request
+  def broadcast_friend_request
+    ActionCable.server.broadcast(
+      "notification_channel_#{@requestee_node.user_id}",
+      requesterId: current_user.id,
+      requesterName: current_user.name,
+      type: 'friend request'
+    )
+  end
+
+  # Broadcast unfriend
+  def broadcast_unfriend
+    ActionCable.server.broadcast(
+      "notification_channel_#{@requestee_node.user_id}",
+      requesterId: current_user.id,
+      requesterName: current_user.name,
+      type: 'unfriend'
+    )
+  end
+
+  # Broadcast friend request acceptance
+  def broadcast_request_acceptance
+    ActionCable.server.broadcast(
+      "notification_channel_#{@requestee_node.user_id}",
+      requesteeId: current_user.id,
+      requesteeName: current_user.name,
+      type: 'accept request'
+    )
+  end
+
+  # Broadcast friend request cancellation
+  def broadcast_cancel_request
+    ActionCable.server.broadcast(
+      "notification_channel_#{@requestee_node.user_id}",
+      requesterId: current_user.id,
+      type: 'cancel request'
+    )
   end
 end
