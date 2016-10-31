@@ -6,6 +6,7 @@
 module ChatRoomInitializer
   extend ActiveSupport::Concern
 
+  # find chat room if already exists one, else create new
   def initialize_chat_room
     @chat_room = find_chat_room
 
@@ -18,6 +19,7 @@ module ChatRoomInitializer
     @chat_room.users = chat_room_users
   end
 
+  # find all users in a chat room
   def chat_room_users
     if params[:is_group_chat]
       User.where(id: params[:user_id]).to_a << current_user
@@ -27,12 +29,16 @@ module ChatRoomInitializer
   end
 
   def current_user_chat_rooms
-    @chat_rooms = ChatRoom.joins(:chat_room_users).where(
+    @chat_rooms = ChatRoom.joins(:chat_room_users).includes(
+      chat_room_users: :user, messages: :user
+    ).where(
       chat_rooms: { is_group_chat: params[:is_group_chat] },
       chat_room_users: { user_id: current_user.id }
     )
   end
 
+  # if room_uuid present find chat room with uuid
+  # else find private chat room of current user with requested user.
   def find_chat_room
     if params[:room_uuid].present?
       ChatRoom.find_by(uuid: params[:room_uuid])
@@ -41,6 +47,8 @@ module ChatRoomInitializer
     end
   end
 
+  # select chat room with participants length 2
+  # and user_id equals requested user id
   def find_one_to_one_chat_room
     @chat_rooms.to_a.find do |chat_room|
       chat_room_users = chat_room.chat_room_users

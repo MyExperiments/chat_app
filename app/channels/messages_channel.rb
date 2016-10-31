@@ -15,6 +15,7 @@ class MessagesChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
+  # Creating new message
   def speak(data)
     chat_room = find_chat_room(data['room_id'])
     return if chat_room.blank?
@@ -26,15 +27,16 @@ class MessagesChannel < ApplicationCable::Channel
     )
   end
 
+  # Broadcast user is typing something
   def typing?(data)
     chat_room = find_chat_room(data['room_id'])
-
     return if chat_room.blank?
 
     ActionCable.server.broadcast(
       "messages_channel_#{chat_room.uuid}",
       user: current_user.email,
-      type: 'status', typed_by: current_user.id
+      type: 'status', typed_by: current_user.id,
+      chat_room_uuid: chat_room.uuid
     )
   end
 

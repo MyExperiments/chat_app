@@ -27,7 +27,7 @@ function removeFriendRequest(requesterId, requesterName){
 //add friend to friend list
 function appendFriend(requesteeId, requesteeName){
   $('.user-listing-container-' + requesteeId).remove();
-  var htmlCode = '<div class="row user-listing-' + requesteeId + ' friend_listing"><div class="col-md-6"><li><a href="#" class="chat-room-link" data-is-group-chat="false" data-user-id=' + requesteeId + '>' + requesteeName + '</a></li></div><div class="col-md-2" id = "user_' + requesteeId + '"><div class="online"></div></div><div class="col-md-4"><a href="#" class="btn btn-danger btn-sm un-friend" data-user-id=' + requesteeId + '>Un-friend</a></div></div>';
+  var htmlCode = '<div class="row user-listing-' + requesteeId + ' friend_listing"><div class="col-md-6"><li><a href="#" class="chat-room-link" data-is-group-chat="false" data-user-id=' + requesteeId + ' data-is-subscription-exist=false >' + requesteeName + '</a></li></div><div class="col-md-2" id = "user_' + requesteeId + '"><div class="online"></div></div><div class="col-md-4"><a href="#" class="btn btn-danger btn-sm un-friend" data-user-id=' + requesteeId + '>Un-friend</a></div></div>';
     $('.users-list').append(htmlCode);
 
 }

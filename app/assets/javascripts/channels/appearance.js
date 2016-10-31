@@ -1,3 +1,4 @@
+// create appearance channel 
 CreateAppearanceChannel = function() {
   App.appearance = App.cable.subscriptions.create({
     channel: "AppearanceChannel"

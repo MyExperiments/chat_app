@@ -6,6 +6,7 @@
 module SelectCurrentUser
   extend ActiveSupport::Concern
 
+  # select current user
   def set_current_user
     authenticate_or_request_with_http_token do |token, _options|
       @current_user = User.find_by(authentication_token: token)

@@ -25,4 +25,6 @@ Metrics/MethodLength:
   Max: 20
 Metrics/LineLength:
   Max: 120
+Style/AccessorMethodName:
+   Enabled: false
 

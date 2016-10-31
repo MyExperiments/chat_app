@@ -23,15 +23,17 @@ $(function() {
     });
   });
 
-  //Ajax request to load chat room
+  // Ajax request to load chat room
   $(document).on('click', '.chat-room-link', function( event ) {
     var userId = $( this ).attr('data-user-id');
     var isGroupChat = $( this ).attr('data-is-group-chat');
+    var isSubscriptionExist = $( this ).attr('data-is-subscription-exist');
+    $( this ).attr('data-is-subscription-exist',true);
     event.preventDefault();
     $.ajax({
       type:'POST',
       url:'/chat_rooms',
-      data: {user_id: userId, is_group_chat: isGroupChat},
+      data: {user_id: userId, is_group_chat: isGroupChat, is_subscription_exist :isSubscriptionExist},
       beforeSend: function(){
         //$( ".chat-room-container" ).empty();
       },
@@ -41,7 +43,7 @@ $(function() {
     });
   });
 
-  //Ajax request for friend request
+  // Ajax request for friend request
   $(document).on('click', '.add-friend', function( event ) {
     var userId = $( this ).attr('data-user-id');
     event.preventDefault();
@@ -55,7 +57,7 @@ $(function() {
     });
   });
 
-  //Ajax request for cancel request
+  // Ajax request for cancel request
   $(document).on('click', '.cancel-request', function( event ) {
     var userId = $( this ).attr('data-user-id');
     event.preventDefault();
@@ -69,7 +71,7 @@ $(function() {
     });
   });
 
-  //Ajax request for accept friend
+  // Ajax request for accept friend
   $(document).on('click', '.accept-request', function( event ) {
     var userId = $( this ).attr('data-user-id');
     var userName = $('.user-listing-' + userId).find('.friend-request-name').text();
@@ -86,7 +88,7 @@ $(function() {
     });
   });
 
-  //Ajax request for unfriend
+  // Ajax request for unfriend
   $(document).on('click', '.un-friend', function( event ) {
     var userId = $( this ).attr('data-user-id');
     var userName = $('.user-listing-' + userId).find('.chat-room-link').text();
@@ -102,7 +104,7 @@ $(function() {
     });
   });
 
-  //Jquery tab
+  // Jquery tab
   $( "#tabs" ).tabs();
 
 });

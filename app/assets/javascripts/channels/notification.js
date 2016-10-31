@@ -1,3 +1,4 @@
+// Create notificaion channel
 CreateNotificationChannel = function() {
   App.notification = App.cable.subscriptions.create({
     channel: "NotificationChannel"
