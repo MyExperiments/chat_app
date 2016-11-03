@@ -1,8 +1,10 @@
-<% users.each do |user| %>
+<% if users.each do |user| %>
   <div class="row user-listing-<%= user.user_id %> friend_request">
     <div class="col-md-6 friend-request-name"><%= user.name %></div>
     <div class="col-md-6"> 
       <%=link_to 'Accept Request', '#' ,class: "btn btn-success btn-sm accept-request", data: {user_id: user.user_id} %>
     </div>
   </div>
+<% end.empty? %>
+  <div class="no-content">No pending requests</div>
 <% end %>

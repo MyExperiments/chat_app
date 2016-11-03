@@ -41,6 +41,8 @@ CreateMessageChannel = function(roomId) {
   });
 };
 
+// On keypress sent message if enter key
+// else sent is-typing status
 $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   if (event.keyCode === 13) {
     App.messages.speak(event.target.value, $(this).data('room-uuid'));
@@ -52,6 +54,7 @@ $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   }
 });
 
+// Open chat room when messsage arrived
 function openChatRoom(userId){
     var $chatRoomLink = $('.user-listing-' + userId +' .chat-room-link');
     var isGroupChat = $chatRoomLink.attr('data-is-group-chat');

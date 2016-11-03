@@ -1,3 +1,9 @@
+<div class= "col-lg-3">
+  <h4><%= chat_room.chat_room_users.first.user.name %></h4>
+</div>
+<div class= "col-lg-3">
+  <h4><%= chat_room.chat_room_users.last.user.name %></h4>
+</div>
 <div class="col-lg-12 chat-room">
   <div class="container messages">
     <div class="message-container message-container-<%= chat_room.uuid %>">
@@ -8,8 +14,8 @@
         </div>
       <% end %>
     </div>
-    <div class="is-typing is-typing-<%= chat_room.uuid %>">
-    </div>
+  </div>
+  <div class="is-typing is-typing-<%= chat_room.uuid %> row">
   </div>
   <textarea class="message-textarea" data-room-id="<%= @chat_room.id %>" data-behavior="room-speaker" data-room-uuid="<%= @chat_room.uuid %>" data-current-user-id="<%= current_user.id %>"></textarea>
 </div>

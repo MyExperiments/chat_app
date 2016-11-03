@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'cancel_request'
       get 'accept_request'
       get 'unfriend_user'
+      get 'user_relations'
     end
   end
   resources :chat_rooms, only: [:show, :create]

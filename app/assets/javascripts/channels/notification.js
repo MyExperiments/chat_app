@@ -7,6 +7,7 @@ CreateNotificationChannel = function() {
     disconnected: function() {},
     received: function(data) {
       if (data.type == 'friend request'){
+        $('.no-content').remove();
         appendFriendRequest(data.requesterId, data.requesterName)
       }
       else if(data.type == 'cancel request'){
@@ -16,6 +17,7 @@ CreateNotificationChannel = function() {
         unfriend(data.requesterId, data.requesterName)
       }
       else if(data.type == 'accept request'){
+        $('.no-content').remove();
         appendFriend(data.requesteeId, data.requesteeName)
       }   
     }

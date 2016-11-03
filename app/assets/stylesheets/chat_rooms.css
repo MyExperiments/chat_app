@@ -1,7 +1,8 @@
 .chat-room .messages {
-  min-height: 125px;
+  height: 250px;
   overflow-y: scroll;
   border: 1px solid;
+  border-bottom: none;
   width: 50%;
   margin-left: 0;
 }
@@ -13,5 +14,11 @@
 }
 
 .is-typing{
+  margin-left: 0px;
   color: green;
+  border: 1px solid black;
+  border-top: none;
+  border-bottom: none;
+  width: 50%;
+  padding-left: 14px;
 }

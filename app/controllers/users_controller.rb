@@ -57,6 +57,15 @@ class UsersController < ApplicationController
     render json: { status: 'success' }
   end
 
+  # GET#user_relations /users
+  def user_relations
+    @path = Neo4j::Session.query(
+      "match p= shortestpath((u:UserNode{user_id: #{current_user.id}})
+      -[f:friend*1..4]-(v:UserNode{user_id: #{params[:user_id]}}))
+       return nodes(p)"
+    ).to_a
+  end
+
   private
 
   # select friends
