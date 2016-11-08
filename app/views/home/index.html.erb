@@ -1,4 +1,5 @@
 <div class="col-lg-8 chat-room-container">
+  <%= render partial: 'users/user_basic_details', locals: { user: current_user } %>
 </div>
 <div class="col-lg-4">
   <div class="well sidebar-nav">
@@ -12,17 +13,19 @@
         <%= text_field_tag :name, nil, class: 'form-control', autocomplete: 'off' %>
         <div class='loader'></div>
         <ul class="nav nav-list users-list">
-          <%= render partial:'users/friend_list', locals: { users: @friends } %>
+          <%= render partial: 'users/friend_list', locals: { users: @friends } %>
         </ul>
       </div>
       <div id="tabs-2">
         <div class='friend-request-container'>
-          <%= render partial:'users/friend_request', locals: { users: @friend_requests } %>
+          <%= render partial: 'users/friend_request', locals: { users: @friend_requests } %>
         </div>
       </div>
       <div id="tabs-3">
+        <%= text_field_tag :pattern, nil, class: 'form-control', autocomplete: 'off' %>
+        <div class='loader'></div>
         <div class="user-listing-container">
-          <%= render partial:'users/users_listing', locals: { users: @users } %>
+          <%= render partial: 'users/users_listing', locals: { users: @users } %>
         </div>
       </div>
     </div>

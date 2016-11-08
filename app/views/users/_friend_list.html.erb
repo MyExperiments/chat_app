@@ -1,15 +1,21 @@
 <%if users.each do |user| %>
   <div class="row user-listing-<%=user.id%> friend_listing">
-    <div class="col-md-6"><li><%= link_to user.name, '#', class: 'chat-room-link', data: { is_group_chat: false, user_id: user.id, is_subscription_exist: false } %></li></div>
+    <div class="col-md-10"><li><%= link_to user.name, user_profile_users_path(user_id: user.id), class: 'user-profile', data: { user_id: user.id } %></li></div>
     <div class="col-md-2" id = "user_<%=user.id%>">
       <% if user.online? %>
         <div class="online"></div>
       <% end %>
+    </div>
+    <div class="col-md-3"> 
+      <%= link_to 'Message','#', class: "btn btn-success btn-sm chat-room-link", data: { is_group_chat: false, user_id: user.id, is_subscription_exist: false } %>
+    </div>
+    <div class="col-md-4"> 
+      <%= link_to 'Mutual friends', mutual_friends_users_path(user_id: user.id), class: "btn btn-success btn-sm mutual-friends-link", data: {user_id: user.id} %>
     </div>
     <div class="col-md-4"> 
       <%= link_to 'Un-friend', '#' ,class: "btn btn-danger btn-sm un-friend", data: {user_id: user.id} %>
     </div>
   </div>
 <% end.empty? %>
-  <div class="no-content">No Friends yet</div>
+  <div class="no-content">No Friends</div>
 <% end %>

@@ -10,6 +10,17 @@
         <%= f.text_field :name, autofocus: true, class: "form-control" %>
       </div>
       <div class="form-group">
+        <%= f.label :gender %><br />
+        <%= f.label :gender, "Male", value: "male"  %>
+        <%= f.radio_button :gender, 'male' %>
+        <%= f.label :gender, "Female", value: "female" %>
+        <%= f.radio_button :gender,'female', checked: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :Picture %>
+        <%= f.file_field :user_pic, class:'form-control',id:'files' %>
+      </div>
+      <div class="form-group">
         <%= f.label :email %>
         <%= f.email_field :email, class: "form-control" %>
       </div>

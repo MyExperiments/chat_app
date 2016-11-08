@@ -53,6 +53,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Actioncable url
-  config.action_cable.url = 'ws://localhost:3000/cable'
-  config.action_cable.allowed_request_origins = ['http://localhost:3000']
+  config.action_cable.url = 'ws://10.2.0.131:3000/cable'
+  config.action_cable.allowed_request_origins = ['http://10.2.0.131:3000']
 end

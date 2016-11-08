@@ -7,18 +7,20 @@ CreateNotificationChannel = function() {
     disconnected: function() {},
     received: function(data) {
       if (data.type == 'friend request'){
-        $('.no-content').remove();
-        appendFriendRequest(data.requesterId, data.requesterName)
+        loadFriendRequests(data.requesterId);
       }
       else if(data.type == 'cancel request'){
-        removeFriendRequest(data.requesterId)
+        $('.user-listing-' + data.requesterId).remove();
+        var htmlCode = '<a class="btn btn-primary btn-sm add-friend" data-user-id=' + data.requesterId + ' href="#">Send Request</a>';
+        $('.add-friend-container-' + data.requesterId).html(htmlCode);
       }
       else if(data.type == 'unfriend'){
-        unfriend(data.requesterId, data.requesterName)
+        $('.user-listing-' + data.requesterId).remove();
+        loadUsersList();
       }
       else if(data.type == 'accept request'){
-        $('.no-content').remove();
-        appendFriend(data.requesteeId, data.requesteeName)
+        $('.user-listing-container-' + data.requesteeId).remove();
+        loadFriendsList();
       }   
     }
   });

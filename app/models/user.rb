@@ -10,11 +10,19 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+  # paper clip image
+  has_attached_file :user_pic, styles: {
+    medium: '300x300#', thumb: '100x100#', smallthumb: '34x34#'
+  }, default_url: '/images/default_:style.png'
+  validates_attachment_content_type :user_pic, content_type: %r{\Aimage\/.*\z}
 
   # set authentication token and requested at
   def set_authentication_token(token = Devise.friendly_token)
     self.authentication_token = token
   end
+
+  # Gender
+  enum gender: [:male, :female]
 
   # search email with pattern
   def self.search_users(pattern)

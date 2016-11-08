@@ -61,12 +61,55 @@ class UsersController < ApplicationController
   def user_relations
     @path = Neo4j::Session.query(
       "match p= shortestpath((u:UserNode{user_id: #{current_user.id}})
-      -[f:friend*1..4]-(v:UserNode{user_id: #{params[:user_id]}}))
+      -[f:friend*1..15]-(v:UserNode{user_id: #{params[:user_id]}}))
        return nodes(p)"
     ).to_a
+    render partial: 'users/user_relations', locals: { path: @path }
+  end
+
+  # GET#mutual friends /users
+  def mutual_friends
+    find_mutual_friends
+    render partial: 'users/mutual_friends', locals: { mutual_friends: @mutual_friends }
+  end
+
+  # GET#user profile /users
+  def user_profile
+    find_mutual_friends
+    @user = User.find(params[:user_id])
+    render partial: 'users/user_profile', locals: { user: @user, mutual_friends: @mutual_friends }
+  end
+
+  # GET#friend_list /users
+  def friends_list
+    initialize_friends
+    render partial: 'users/friend_list', locals: { users: @friends }
+  end
+
+  # GET#users_list /users
+  def users_list
+    initialize_friends
+    @users = @users.select { |x| x.name.downcase.start_with?(params[:pattern].downcase) } if params[:pattern].present?
+    render partial: 'users/users_listing', locals: { users: @users }
+  end
+
+  # GET#friend_request /users
+  def friend_requests
+    @friend_requests = UserNode.find_by(user_id: current_user.id).friend_requests
+    render partial: 'users/friend_request', locals: { users: @friend_requests }
   end
 
   private
+
+  # find mutual friends
+  def find_mutual_friends
+    mutual_friends_ids = Neo4j::Session.query(
+      "MATCH (n:UserNode{user_id: #{current_user.id}})
+      -[:friend]-(m)-[:friend]-(u:UserNode{user_id: #{params[:user_id]}})
+      return m"
+    ).to_a.map { |m| m[0].user_id }
+    @mutual_friends = User.where(id: mutual_friends_ids)
+  end
 
   # select friends
   def find_friends
@@ -77,5 +120,12 @@ class UsersController < ApplicationController
   def select_nodes
     @requestee_node = UserNode.find_by(user_id: params[:user_id])
     @requester_node = UserNode.find_by(user_id: current_user.id)
+  end
+
+  # set users friends and friend requests
+  def initialize_friends
+    @friends_ids = UserNode.find_by(user_id: current_user.id).friends.to_a.map(&:user_id)
+    @friends = User.where(id: @friends_ids)
+    @users = User.where.not(id: @friends_ids << current_user.id)
   end
 end

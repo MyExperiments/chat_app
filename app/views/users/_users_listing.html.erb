@@ -1,6 +1,9 @@
 <% users.each do |user| %>
   <div class="row user-listing user-listing-container-<%= user.id %>">
-    <div class="col-md-6"><%= link_to user.name, user_relations_users_path(user_id: user.id) %></div>
+    <div class="col-md-12"><%= link_to user.name, user_profile_users_path(user_id: user.id), class: 'user-profile',data: {user_id: user.id} %></div>
+    <div class="col-md-6 user-relations"> 
+      <%= link_to 'Your connection', user_relations_users_path(user_id: user.id), class: "btn btn-success btn-sm user-connection", data: {user_id: user.id} %>
+    </div>
     <div class="col-md-6 add-friend-container-<%= user.id %>"> 
       <%= friend_request_exist(user.id, current_user.id) %>
     </div>

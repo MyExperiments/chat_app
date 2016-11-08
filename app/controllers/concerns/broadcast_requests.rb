@@ -11,7 +11,6 @@ module BroadcastRequests
     ActionCable.server.broadcast(
       "notification_channel_#{@requestee_node.user_id}",
       requesterId: current_user.id,
-      requesterName: current_user.name,
       type: 'friend request'
     )
   end
@@ -21,7 +20,6 @@ module BroadcastRequests
     ActionCable.server.broadcast(
       "notification_channel_#{@requestee_node.user_id}",
       requesterId: current_user.id,
-      requesterName: current_user.name,
       type: 'unfriend'
     )
   end
@@ -31,7 +29,6 @@ module BroadcastRequests
     ActionCable.server.broadcast(
       "notification_channel_#{@requestee_node.user_id}",
       requesteeId: current_user.id,
-      requesteeName: current_user.name,
       type: 'accept request'
     )
   end

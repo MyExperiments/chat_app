@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021064423) do
+ActiveRecord::Schema.define(version: 20161103112530) do
+
   create_table "chat_room_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "chat_room_id"
@@ -54,6 +55,11 @@ ActiveRecord::Schema.define(version: 20161021064423) do
     t.string   "authentication_token"
     t.boolean  "online"
     t.string   "name"
+    t.string   "user_pic_file_name"
+    t.string   "user_pic_content_type"
+    t.integer  "user_pic_file_size"
+    t.datetime "user_pic_updated_at"
+    t.integer  "gender"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

@@ -16,6 +16,11 @@ Rails.application.routes.draw do
       get 'accept_request'
       get 'unfriend_user'
       get 'user_relations'
+      get 'mutual_friends'
+      get 'user_profile'
+      get 'friends_list'
+      get 'users_list'
+      get 'friend_requests'
     end
   end
   resources :chat_rooms, only: [:show, :create]

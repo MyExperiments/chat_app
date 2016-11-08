@@ -1,0 +1,92 @@
+<div class="row gt">
+  <div class="col-md-12"><h3>How You’re Connected</h3></div>
+  <div class="user-nodes col-md-12" id="user-nodes"></div>
+</div>
+<script>
+  <% if path.present?%>
+    var cx = 60;
+    var cy = 60;
+    var x1 = 60;
+    var y1 = 60;
+    var x2 = 60;
+    var y2 = 60;
+    var xt = 60;
+    var yt = 20;
+    var t = 50; 
+    var circleRadius = 30;
+    var nodeCount = <%= path[0][0].length %>;
+    var lineData = [];
+    var lineFunction = d3.line()
+                         .x(function(d) { return d.x; })
+                         .y(function(d) { return d.y; })
+    // SVG container to append shapes
+    var svgContainer = d3.select('#user-nodes')
+                         .append('svg')
+                         .attr('width',700)
+                         .attr('height',140*nodeCount);
+
+    // defs for defining patterns
+    var defs = svgContainer.append('svg:defs');
+
+    
+    // building coordinate points
+    <% path[0][0].each do |user| %>
+      var lineCoordinates = {};
+      lineCoordinates['x'] = cx;
+      lineCoordinates['y'] = cy;
+      lineCoordinates['name'] = "<%= user.name %>"
+      lineCoordinates['url'] = "url(#img-" + cx + ")"
+      // building image pattern for each users
+      defs.append("svg:pattern")
+          .attr("id",'img-'+cx)
+          .attr("width",30)
+          .attr("height",30)
+          .append("svg:image")
+          .attr("xlink:href", "<%= User.find(user.user_id).user_pic.url(:medium) %>")
+          .attr("width", 60)
+          .attr("height", 60)
+      cx = cx + 40;
+      cy = cy + 80;
+      lineData.push(lineCoordinates);
+    <% end %>
+
+    // Draw line paths through all the coordinate points
+    svgContainer.append("path")
+                .attr("d", lineFunction(lineData))
+                .attr("stroke", "RebeccaPurple ")
+                .attr("stroke-width", 2)
+                .attr("fill", "none");
+
+    
+
+    // Append name in all coordinate points
+    svgContainer.selectAll('text')
+                .data(lineData)
+                .enter()
+                .append('text')
+                .text(function(d){ return d.name })
+                .attr('x',function(d){ return d.x-15 })
+                .attr('y',function(d){ return d.y-35 })
+                .attr("fill", "black");
+
+    
+
+    // Append circles in all coordinate points
+    svgContainer.selectAll('circle')
+                .data(lineData)
+                .enter()
+                .append('circle')
+                .attr('cx',function(d){
+                  return d.x     
+                })
+                .attr('cy',function(d){
+                  return d.y;
+                })
+                .attr('r',circleRadius)
+                .style('fill',function(d){ return d.url; });
+
+  <% else %>
+    var html = '<div class="no-relationship col-md-12">No relationships exists</div>';
+    $('.user-nodes').append(html);
+  <% end %>
+</script>

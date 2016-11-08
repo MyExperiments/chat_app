@@ -35,7 +35,8 @@ class MessagesChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(
       "messages_channel_#{chat_room.uuid}",
       user: current_user.email,
-      type: 'status', typed_by: current_user.id,
+      type: 'status',
+      typed_by: current_user.id,
       chat_room_uuid: chat_room.uuid
     )
   end

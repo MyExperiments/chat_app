@@ -1,0 +1,6 @@
+<div class="row">
+  <%= render partial: 'users/user_basic_details', locals: { user: user } %>
+  <% if mutual_friends.present? %>
+    <%= render partial: 'users/mutual_friends', locals:{ mutual_friends: mutual_friends } %>
+  <% end %>
+</div>

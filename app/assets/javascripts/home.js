@@ -2,7 +2,7 @@ $(document).on('turbolinks:load', function() {
   // hide loader initially
   $('.loader').hide();
 
-  // Ajax request for user search 
+  // Ajax request for friends search 
   $( "#name" ).keyup(function() {
     var valuesToSubmit = $(this).val();
     $.ajax({
@@ -23,6 +23,27 @@ $(document).on('turbolinks:load', function() {
     });
   });
 
+  // 
+  $( "#pattern" ).keyup(function() {
+    var valuesToSubmit = $(this).val();
+    $.ajax({
+      type:'GET',
+      url:'/users/users_list',
+      data: {pattern: valuesToSubmit},
+      beforeSend: function(){
+        $('.user-listing-container').hide();
+        $('.loader').show();
+      },
+      success: function(result){ 
+        $(".user-listing-container").html(result);
+      },
+      complete: function(){
+        $('.loader').hide();
+        $('.user-listing-container').show();
+      }
+    });
+  });
+
   // Ajax request to load chat room
   $(document).on('click', '.chat-room-link', function( event ) {
     var userId = $( this ).attr('data-user-id');
@@ -34,9 +55,6 @@ $(document).on('turbolinks:load', function() {
       type:'POST',
       url:'/chat_rooms',
       data: {user_id: userId, is_group_chat: isGroupChat, is_subscription_exist :isSubscriptionExist},
-      beforeSend: function(){
-        //$( ".chat-room-container" ).empty();
-      },
       success: function(result){ 
         $(".chat-room-container").html(result);
       }
@@ -83,7 +101,7 @@ $(document).on('turbolinks:load', function() {
       success: function(result){ 
         $('.user-listing-' + userId).remove();
         $('.user-listing-container-' + userId).remove();
-        appendFriend(userId, userName);
+        loadFriendsList();
       }
     });
   });
@@ -99,7 +117,49 @@ $(document).on('turbolinks:load', function() {
       data: {user_id: userId},
       success: function(){ 
         $('.user-listing-' + userId).remove();
-        unfriend(userId, userName)
+        loadUsersList();
+      }
+    });
+  });
+
+  //Ajax request for mutual friend
+  $(document).on('click', '.mutual-friends-link', function( event ) {
+    var userId = $( this ).attr('data-user-id');
+    event.preventDefault();
+    $.ajax({
+      type:'GET',
+      url:'/users/mutual_friends',
+      data: {user_id: userId},
+      success: function(result){ 
+        $(".chat-room-container").html(result);
+      }
+    });
+  });
+
+  //Ajax request for user connection
+  $(document).on('click', '.user-connection', function( event ) {
+    var userId = $( this ).attr('data-user-id');
+    event.preventDefault();
+    $.ajax({
+      type:'GET',
+      url:'/users/user_relations',
+      data: {user_id: userId},
+      success: function(result){ 
+        $(".chat-room-container").html(result);
+      }
+    });
+  });
+
+  //Ajax request for user profile
+  $(document).on('click', '.user-profile', function( event ) {
+    var userId = $( this ).attr('data-user-id');
+    event.preventDefault();
+    $.ajax({
+      type:'GET',
+      url:'/users/user_profile',
+      data: {user_id: userId},
+      success: function(result){ 
+        $(".chat-room-container").html(result);
       }
     });
   });

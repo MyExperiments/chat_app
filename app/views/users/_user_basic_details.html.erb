@@ -1,0 +1,11 @@
+<div class="col-md-12 profile-pic"><%= image_tag user.user_pic.url(:medium), class: "img-circle" %></div>
+<div class="col-md-12 user-name"><h3><%= user.name %></h3></div>
+<div class="col-md-12"><h3>Basic Details</h3></div>
+<div class="col-md-12">
+  <div class="row basic-details"> 
+    <div class="col-md-12"><label>Email</label></div>
+    <div class="col-md-12 user-email"><%= user.email %></div>
+    <div class="col-md-12"><label>Gender</label></div>
+    <div class="col-md-12 gender"><%= user.gender%></div>
+  </div>
+</div>

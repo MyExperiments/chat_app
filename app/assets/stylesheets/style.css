@@ -9,3 +9,21 @@
   font-size: 20px;
   text-align: center;
 }
+.content{
+  padding-bottom: 100px;
+  min-height: 800px;
+}
+.profile-pic,
+.user-name{
+  text-align: center;
+}
+.basic-details{
+  padding-left: 20px;
+}
+.user-email,
+.gender{
+  padding-left: 20px;
+}
+.no-mutual-friends{
+  text-align: center;
+}
