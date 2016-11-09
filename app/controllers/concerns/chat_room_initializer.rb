@@ -28,6 +28,7 @@ module ChatRoomInitializer
     end
   end
 
+  # find chatrooms of current user
   def current_user_chat_rooms
     @chat_rooms = ChatRoom.joins(:chat_room_users).includes(
       chat_room_users: :user, messages: :user

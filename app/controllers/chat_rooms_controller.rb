@@ -17,7 +17,8 @@ class ChatRoomsController < ApplicationController
   def create
     initialize_chat_room
     if request.xhr?
-      render partial: 'show', locals: { chat_room: @chat_room, is_subscription_exist: params['is_subscription_exist'] }
+      Message.set_is_read_flag(@chat_room.id)
+      render partial: 'show', locals: { chat_room: @chat_room }
     else
       redirect_to chat_room_path(@chat_room)
     end

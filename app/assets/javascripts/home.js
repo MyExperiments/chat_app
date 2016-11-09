@@ -48,13 +48,13 @@ $(document).on('turbolinks:load', function() {
   $(document).on('click', '.chat-room-link', function( event ) {
     var userId = $( this ).attr('data-user-id');
     var isGroupChat = $( this ).attr('data-is-group-chat');
-    var isSubscriptionExist = $( this ).attr('data-is-subscription-exist');
-    $( this ).attr('data-is-subscription-exist',true);
+    $( this ).html('Message');
+    $( this ).data('message-count',0);
     event.preventDefault();
     $.ajax({
       type:'POST',
       url:'/chat_rooms',
-      data: {user_id: userId, is_group_chat: isGroupChat, is_subscription_exist :isSubscriptionExist},
+      data: {user_id: userId, is_group_chat: isGroupChat},
       success: function(result){ 
         $(".chat-room-container").html(result);
       }

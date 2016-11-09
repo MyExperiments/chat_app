@@ -31,3 +31,11 @@
 .mutual-friends-listing-container{
   padding-top: 50px;
 }
+.message-badge{
+}
+.chat-room-link{
+  width: 96px;
+}
+.mutual-friend-name{
+  margin-top: 10px;
+}

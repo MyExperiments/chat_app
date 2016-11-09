@@ -1,7 +1,13 @@
 <div class="col-md-12">
   <div class="row mutual-friends">
     <div class="col-md-2 col-md-offset-2"><%= image_tag current_user.user_pic.url(:thumb), class: "img-circle" %></div>
-    <div class="col-md-4 mutual-friends-title"><h3>Mutual friends</h3></div>
+    <div class="col-md-4 mutual-friends-title">
+      <div class="row">
+        <div class="col-md-12"><h3>Mutual friends</h3></div>
+        <div class="col-md-12">with</div>
+        <div class="col-md-12"><h3 class="mutual-friend-name"><%= user.name %></h3></div>
+      </div>
+    </div>
     <div class="col-md-2"><%= image_tag user.user_pic.url(:thumb), class: "img-circle" %></div>
     <div class="col-md-12">
       <div class="row mutual-friends-listing-container">

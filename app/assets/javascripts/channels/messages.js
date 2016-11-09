@@ -9,7 +9,11 @@ CreateMessageChannel = function(roomId) {
     received: function(data) {
       var currentUserId = $('.message-textarea').data('current-user-id');
       if(data['type'] == 'message'){
-        var message = '<div class="col-lg-12"><span>' + data['user'] + ': </span><span>' + data['message'] + '</span></div>';
+        sender = (currentUserId == data['user_id'])?'You':data['user'];
+        var message = '<div class="col-lg-12"><span>' + sender + ': </span><span>' + data['message'] + '</span></div>';
+        if (data['user_id'] != currentUserId){
+          appendBadge(data['user_id']);
+        }
         return $('.message-container-' + data['chat_room_uuid']).append(message);
       }
       else{
@@ -52,21 +56,11 @@ $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   }
 });
 
-// Open chat room when messsage arrived
-function openChatRoom(userId){
-    var $chatRoomLink = $('.user-listing-' + userId +' .chat-room-link');
-    var isGroupChat = $chatRoomLink.attr('data-is-group-chat');
-    var isSubscriptionExist = $chatRoomLink.attr('data-is-subscription-exist');
-    $chatRoomLink.attr('data-is-subscription-exist',true);
-    $.ajax({
-      type:'POST',
-      url:'/chat_rooms',
-      data: {user_id: userId, is_group_chat: isGroupChat, is_subscription_exist :isSubscriptionExist},
-      beforeSend: function(){
-        //$( ".chat-room-container" ).empty();
-      },
-      success: function(result){ 
-        $(".chat-room-container").html(result);
-      }
-    });
+//append badge
+function appendBadge(userId){
+  var chatRoomLink = $('.chat-room-link-' + userId);
+  var messageCount = chatRoomLink.data('message-count') + 1;
+  chatRoomLink.data('message-count', messageCount);
+  var badge = '<span class="badge message-badge">' + messageCount + '</span>'
+  chatRoomLink.html('Message ' + badge);
 }
