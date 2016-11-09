@@ -1,0 +1,14 @@
+<% if mutual_friends.each do |mutual_friend| %>
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-12 profile-pic">
+        <%= link_to user_profile_users_path(user_id:  mutual_friend.id), class: 'user-profile', data: { user_id: mutual_friend.id } do %>
+          <%= image_tag mutual_friend.user_pic.url(:thumb), class: "img-circle" %>
+        <% end %>
+      </div>
+      <div class="user-name"><h5><%= mutual_friend.name %></h5></div>
+    </div>
+  </div>
+<% end.empty? %>
+  <div class="no-mutual-friends"><h4>No mutual freinds</h4></div>
+<% end %>

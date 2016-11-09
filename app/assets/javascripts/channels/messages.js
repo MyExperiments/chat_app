@@ -9,9 +9,6 @@ CreateMessageChannel = function(roomId) {
     received: function(data) {
       var currentUserId = $('.message-textarea').data('current-user-id');
       if(data['type'] == 'message'){
-        if (data['user_id'] != currentUserId ){
-          openChatRoom(data['user_id'])
-        }
         var message = '<div class="col-lg-12"><span>' + data['user'] + ': </span><span>' + data['message'] + '</span></div>';
         return $('.message-container-' + data['chat_room_uuid']).append(message);
       }
@@ -23,7 +20,7 @@ CreateMessageChannel = function(roomId) {
         var $isTyping = $('.is-typing-' + data['chat_room_uuid']);
         $isTyping.show();
         $isTyping.html(message);
-        $isTyping.delay(3000).hide(0);
+        $isTyping.delay(2000).hide(0);
       }
     },
     speak: function(message, roomId) {
@@ -44,13 +41,14 @@ CreateMessageChannel = function(roomId) {
 // On keypress sent message if enter key
 // else sent is-typing status
 $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
+  roomId = $(this).data('room-uuid');
   if (event.keyCode === 13) {
-    App.messages.speak(event.target.value, $(this).data('room-uuid'));
+    App.messages.speak(event.target.value, roomId);
     event.target.value = "";
     event.preventDefault();
   }
   else{
-    App.messages.isTyping($(this).data('room-uuid'))
+    App.messages.isTyping(roomId);
   }
 });
 

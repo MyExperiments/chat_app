@@ -9,7 +9,13 @@
     <div class="message-container message-container-<%= chat_room.uuid %>">
       <% chat_room.messages.each do |message| %>
         <div class="col-lg-12">
-          <span><%= message.user.email %> : </span>
+          <span>
+            <% if message.user.id == current_user.id %>
+              You:
+            <% else %>
+              <%= message.user.name %> :
+            <% end %> 
+          </span>
           <span><%= message.content %></span>
         </div>
       <% end %>
@@ -19,10 +25,3 @@
   </div>
   <textarea class="message-textarea" data-room-id="<%= @chat_room.id %>" data-behavior="room-speaker" data-room-uuid="<%= @chat_room.uuid %>" data-current-user-id="<%= current_user.id %>"></textarea>
 </div>
-<% if is_subscription_exist == 'false' %>
-  <script>
-      $(function() {
-        CreateMessageChannel('<%= @chat_room.uuid %>');
-      });
-  </script>
-<% end %>

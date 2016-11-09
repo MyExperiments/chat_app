@@ -24,6 +24,10 @@
 .gender{
   padding-left: 20px;
 }
-.no-mutual-friends{
+.no-mutual-friends,
+.mutual-friends-title{
   text-align: center;
+}
+.mutual-friends-listing-container{
+  padding-top: 50px;
 }

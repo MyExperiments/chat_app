@@ -14,8 +14,6 @@
 config/database.yml
 config/secrets.yml
 config/cable.yml
-public/system/*
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

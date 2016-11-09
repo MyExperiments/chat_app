@@ -70,13 +70,12 @@ class UsersController < ApplicationController
   # GET#mutual friends /users
   def mutual_friends
     find_mutual_friends
-    render partial: 'users/mutual_friends', locals: { mutual_friends: @mutual_friends }
+    render partial: 'users/mutual_friends', locals: { mutual_friends: @mutual_friends, user: @user }
   end
 
   # GET#user profile /users
   def user_profile
     find_mutual_friends
-    @user = User.find(params[:user_id])
     render partial: 'users/user_profile', locals: { user: @user, mutual_friends: @mutual_friends }
   end
 
@@ -109,6 +108,7 @@ class UsersController < ApplicationController
       return m"
     ).to_a.map { |m| m[0].user_id }
     @mutual_friends = User.where(id: mutual_friends_ids)
+    @user = User.find(params[:user_id])
   end
 
   # select friends
