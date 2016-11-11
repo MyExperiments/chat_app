@@ -5,17 +5,14 @@
 #
 class UsersController < ApplicationController
   include BroadcastRequests
-
-  # GET#index /users
-  def index
-    find_friends
-    @users = User.search_users(params[:name]).select { |x| @friend_ids.include?(x.id) }
-    render partial: 'users/friend_list', locals: { users: @users } if request.xhr?
-  end
+  include ChatRoomInitializer
+  before_action :select_nodes, only: [:friend_request, :cancel_request,
+                                      :accept_request, :unfriend_user]
+  before_action :current_user_chat_rooms, only: [:friends_list]
+  before_action :initialize_friends, only: [:friends_list, :users_list]
 
   # GET#friend_request /users
   def friend_request
-    select_nodes
     @requestee_node.friend_requests << @requester_node
     broadcast_friend_request
     if request.xhr?
@@ -27,7 +24,6 @@ class UsersController < ApplicationController
 
   # GET#cancel_request /users
   def cancel_request
-    select_nodes
     requester_node = @requester_node
     @requestee_node.friend_requests(:requester_node, :rel).match_to(requester_node).delete_all(:rel)
     broadcast_cancel_request
@@ -40,7 +36,6 @@ class UsersController < ApplicationController
 
   # GET#accept_request /users
   def accept_request
-    select_nodes
     requestee_node = @requestee_node
     @requestee_node.friends << @requester_node
     @requester_node.friend_requests(:requestee_node, :rel).match_to(requestee_node).delete_all(:rel)
@@ -50,7 +45,6 @@ class UsersController < ApplicationController
 
   # GET#unfriend_user /users
   def unfriend_user
-    select_nodes
     requestee_node = @requestee_node
     @requester_node.friends(:requestee_node, :rel).match_to(requestee_node).delete_all(:rel)
     broadcast_unfriend
@@ -81,13 +75,13 @@ class UsersController < ApplicationController
 
   # GET#friend_list /users
   def friends_list
-    initialize_friends
+    unread_messages
+    @friends = @friends.select { |x| x.name.downcase.start_with?(params[:name].downcase) } if params[:name].present?
     render partial: 'users/friend_list', locals: { users: @friends }
   end
 
   # GET#users_list /users
   def users_list
-    initialize_friends
     @users = @users.select { |x| x.name.downcase.start_with?(params[:pattern].downcase) } if params[:pattern].present?
     render partial: 'users/users_listing', locals: { users: @users }
   end
@@ -113,7 +107,7 @@ class UsersController < ApplicationController
 
   # select friends
   def find_friends
-    @friend_ids = UserNode.find_by(user_id: current_user.id).friends.to_a.map(&:user_id)
+    @friends_ids = UserNode.find_by(user_id: current_user.id).friends.to_a.map(&:user_id)
   end
 
   # select requester and requestee
@@ -124,7 +118,7 @@ class UsersController < ApplicationController
 
   # set users friends and friend requests
   def initialize_friends
-    @friends_ids = UserNode.find_by(user_id: current_user.id).friends.to_a.map(&:user_id)
+    find_friends
     @friends = User.where(id: @friends_ids)
     @users = User.where.not(id: @friends_ids << current_user.id)
   end

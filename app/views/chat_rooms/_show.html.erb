@@ -1,22 +1,21 @@
 <div class= "col-lg-3">
-  <h4><%= chat_room.chat_room_users.first.user.name %></h4>
-</div>
-<div class= "col-lg-3">
-  <h4><%= chat_room.chat_room_users.last.user.name %></h4>
+  <h4><%= @user.name %></h4>
 </div>
 <div class="col-lg-12 chat-room">
   <div class="container messages">
-    <div class="message-container message-container-<%= chat_room.uuid %>">
+    <div class="message-container message-container-<%= chat_room.uuid %>" data-user-pic-url="<%= @user.user_pic.url(:smallthumb) %>" data-chat-room-uuid= "<%= chat_room.uuid %>" >
       <% chat_room.messages.each do |message| %>
-        <div class="col-lg-12">
-          <span>
-            <% if message.user.id == current_user.id %>
-              You:
-            <% else %>
-              <%= message.user.name %> :
-            <% end %> 
-          </span>
-          <span><%= message.content %></span>
+        <div class="col-lg-12 message-content">
+          <% if message.user.id == current_user.id %>
+            <div class="col-lg-12 message-content message-content-sender">
+              <span class="send-message"><%= message.content %></span>
+            </div>
+          <% else %>
+            <div class="col-lg-12 message-content message-content-receiver">
+              <span><%= image_tag message.user.user_pic.url(:smallthumb), class: "img-circle" %></span>
+              <span class="received-message"><%= message.content %></span>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>

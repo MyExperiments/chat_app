@@ -30,10 +30,11 @@ module ChatRoomInitializer
 
   # find chatrooms of current user
   def current_user_chat_rooms
+    is_group_chat = params[:is_group_chat].present? ? params[:is_group_chat] : FALSE_STR
     @chat_rooms = ChatRoom.joins(:chat_room_users).includes(
       chat_room_users: :user, messages: :user
     ).where(
-      chat_rooms: { is_group_chat: params[:is_group_chat] },
+      chat_rooms: { is_group_chat: is_group_chat },
       chat_room_users: { user_id: current_user.id }
     )
   end
@@ -56,6 +57,20 @@ module ChatRoomInitializer
       chat_room_users.length == 2 && chat_room_users.any? do |chat_room_user|
         chat_room_user.user_id == params[:user_id].to_i
       end
+    end
+  end
+
+  # find userwise unread message count
+  def unread_messages
+    @user_wise_unread_messages = {}
+    @chat_rooms.each do |chat_room|
+      user_id = chat_room.chat_room_users
+                         .where.not(user_id: current_user.id)
+                         .first.user_id
+      unread_message_count = chat_room.messages
+                                      .where.not(user_id: current_user.id)
+                                      .where(is_read: 0).count
+      @user_wise_unread_messages[user_id] = unread_message_count
     end
   end
 end

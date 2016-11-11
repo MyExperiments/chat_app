@@ -25,7 +25,7 @@ class MessagesChannel < ApplicationCable::Channel
       chat_room_id: @chat_room.id,
       content: data['message']
     )
-    broadcast_message(data['message'])
+    broadcast('message', data['message'])
   rescue
     return
   end
@@ -34,39 +34,24 @@ class MessagesChannel < ApplicationCable::Channel
   def typing?(data)
     @chat_room = find_chat_room(data['room_id'])
     return if @chat_room.blank?
-    broadcast_typing
+    # broadcast_typing
+    broadcast('status')
   end
 
+  # find chat room
   def find_chat_room(uuid)
     ChatRoom.find_by(uuid: uuid)
   end
 
   private
 
-  # broadcast message to reciever's message channel
-  def broadcast_message(message)
+  # Broadcast message or typing status
+  def broadcast(type, msg = nil)
+    hash = { user: current_user.name, type: type, user_id: current_user.id,
+             chat_room_uuid: @chat_room.uuid }
+    hash[:message] = msg if msg.present?
     @chat_room.users.each do |reciever|
-      ActionCable.server.broadcast(
-        "messages_channel_#{reciever.id}",
-        message: message,
-        user: current_user.name,
-        type: 'message',
-        user_id: current_user.id,
-        chat_room_uuid: @chat_room.uuid
-      )
-    end
-  end
-
-  # broadcast is typing to reciever's message channel
-  def broadcast_typing
-    @chat_room.users.each do |reciever|
-      ActionCable.server.broadcast(
-        "messages_channel_#{reciever.id}",
-        user: current_user.name,
-        type: 'status',
-        typed_by: current_user.id,
-        chat_room_uuid: @chat_room.uuid
-      )
+      ActionCable.server.broadcast("messages_channel_#{reciever.id}", hash)
     end
   end
 end

@@ -6,7 +6,7 @@
 class ChatRoomsController < ApplicationController
   include ChatRoomInitializer
 
-  before_action :current_user_chat_rooms, only: [:create]
+  before_action :current_user_chat_rooms, only: [:create, :unread_messages]
 
   def show
     @chat_room = ChatRoom.includes(
@@ -16,9 +16,10 @@ class ChatRoomsController < ApplicationController
 
   def create
     initialize_chat_room
+    @user = @chat_room.chat_room_users.where.not(user_id: current_user.id).first.user
     if request.xhr?
       Message.set_is_read_flag(@chat_room.id)
-      render partial: 'show', locals: { chat_room: @chat_room }
+      render partial: 'show', locals: { chat_room: @chat_room, user: @user }
     else
       redirect_to chat_room_path(@chat_room)
     end

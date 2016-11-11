@@ -1,10 +1,12 @@
 .chat-room .messages {
-  height: 250px;
+  height: 350px;
   overflow-y: scroll;
   border: 1px solid;
   border-bottom: none;
   width: 50%;
   margin-left: 0;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .message-textarea {
@@ -21,4 +23,7 @@
   border-bottom: none;
   width: 50%;
   padding-left: 14px;
+}
+.message-content{
+  margin-top: 5px;
 }

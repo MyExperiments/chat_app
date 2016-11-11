@@ -7,7 +7,7 @@ $(document).on('turbolinks:load', function() {
     var valuesToSubmit = $(this).val();
     $.ajax({
       type:'GET',
-      url:'/users',
+      url:'/users/friends_list',
       data: {name: valuesToSubmit},
       beforeSend: function(){
         $('.users-list').hide();
@@ -23,7 +23,7 @@ $(document).on('turbolinks:load', function() {
     });
   });
 
-  // 
+  // Ajax request for users search 
   $( "#pattern" ).keyup(function() {
     var valuesToSubmit = $(this).val();
     $.ajax({
@@ -57,6 +57,7 @@ $(document).on('turbolinks:load', function() {
       data: {user_id: userId, is_group_chat: isGroupChat},
       success: function(result){ 
         $(".chat-room-container").html(result);
+        scrollDown();
       }
     });
   });
@@ -166,5 +167,11 @@ $(document).on('turbolinks:load', function() {
 
   // Jquery tab
   $( "#tabs" ).tabs();
-
 });
+
+// scrollDown
+function scrollDown(){
+  var wtf    = $('.messages');
+  var height = wtf[0].scrollHeight;
+  wtf.scrollTop(height);
+}

@@ -27,4 +27,6 @@ Metrics/LineLength:
   Max: 120
 Style/AccessorMethodName:
    Enabled: false
+Metrics/AbcSize:
+  Max: 18
 

@@ -39,3 +39,21 @@
 .mutual-friend-name{
   margin-top: 10px;
 }
+.received-message,
+.send-message{
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+}
+.send-message{
+  border: 1px solid #817CAC;
+  background-color: #817CAC;
+  color: #fff;
+  text-align: right;
+}
+.received-message{
+  border: 1px solid #E8EBF0;
+  background-color: #E8EBF0;
+}
+.message-content-sender{
+  text-align: right;
+}

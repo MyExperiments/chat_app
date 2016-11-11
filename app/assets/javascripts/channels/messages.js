@@ -9,15 +9,22 @@ CreateMessageChannel = function(roomId) {
     received: function(data) {
       var currentUserId = $('.message-textarea').data('current-user-id');
       if(data['type'] == 'message'){
-        sender = (currentUserId == data['user_id'])?'You':data['user'];
-        var message = '<div class="col-lg-12"><span>' + sender + ': </span><span>' + data['message'] + '</span></div>';
+        var activeChatRoom = $('.message-container').data('chat-room-uuid');
         if (data['user_id'] != currentUserId){
-          appendBadge(data['user_id']);
+          var imageSrc = $('.message-container').data('user-pic-url');
+          var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">' + data['message'] + '</span></div></div></div>';
+          if (activeChatRoom != data['chat_room_uuid']){
+            appendBadge(data['user_id']);
+          }
         }
-        return $('.message-container-' + data['chat_room_uuid']).append(message);
+        else{
+          var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + data['message'] + '</span></div></div>'
+        }
+       $('.message-container-' + data['chat_room_uuid']).append(message);
+       scrollDown();
       }
       else{
-        if (data['typed_by'] == currentUserId){
+        if (data['user_id'] == currentUserId){
           return;
         }
         var message = '<div class="col-lg-12 msgbody"><span>' + data['user'] + ': </span><span>' + ' is typing' + '</span></div>';
@@ -63,4 +70,11 @@ function appendBadge(userId){
   chatRoomLink.data('message-count', messageCount);
   var badge = '<span class="badge message-badge">' + messageCount + '</span>'
   chatRoomLink.html('Message ' + badge);
+}
+
+// scrollDown
+function scrollDown(){
+  var wtf    = $('.messages');
+  var height = wtf[0].scrollHeight;
+  wtf.scrollTop(height);
 }

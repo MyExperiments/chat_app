@@ -1,4 +1,4 @@
-<%if users.each do |user| %>
+<% if users.each do |user| %>
   <div class="row user-listing-<%=user.id%> friend_listing">
     <div class="col-md-10"><li><%= link_to user.name, user_profile_users_path(user_id: user.id), class: 'user-profile', data: { user_id: user.id } %></li></div>
     <div class="col-md-2" id = "user_<%=user.id%>">
@@ -7,7 +7,12 @@
       <% end %>
     </div>
     <div class="col-md-4"> 
-      <%= link_to 'Message','#', class: "btn btn-success btn-sm chat-room-link chat-room-link-#{user.id}", data: { is_group_chat: false, user_id: user.id, message_count: 0 } %>
+      <%= link_to '#', class: "btn btn-success btn-sm chat-room-link chat-room-link-#{user.id}", data: { is_group_chat: false, user_id: user.id, message_count: @user_wise_unread_messages[user.id].to_i } do %>
+          Message
+          <% if @user_wise_unread_messages[user.id].to_i > 0 %>
+            <span class="badge message-badge"><%= @user_wise_unread_messages[user.id] %></span>
+          <% end %>
+        <% end %>
     </div>
     <div class="col-md-4"> 
       <%= link_to 'Mutual friends', mutual_friends_users_path(user_id: user.id), class: "btn btn-success btn-sm mutual-friends-link", data: {user_id: user.id} %>

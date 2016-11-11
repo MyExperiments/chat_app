@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get 'friend_requests'
     end
   end
+
   resources :chat_rooms, only: [:show, :create]
 
   namespace :api do

@@ -1,2 +1,2 @@
-TRUE_STR = 'true'
-FALSE_STR = 'false'
+TRUE_STR = 'true'.freeze
+FALSE_STR = 'false'.freeze
