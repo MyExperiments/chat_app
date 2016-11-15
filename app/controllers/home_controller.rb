@@ -5,9 +5,9 @@
 #
 class HomeController < ApplicationController
   include ChatRoomInitializer
-  before_action :current_user_chat_rooms, only: [:index]
-  before_action :initialize_friends, only: [:index]
-  before_action :unread_messages
+  before_action :current_user_chat_rooms, only: :index
+  before_action :initialize_friends, only: :index
+  before_action :unread_messages, only: :index
 
   # GET#index /home
   def index

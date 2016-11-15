@@ -2,7 +2,7 @@
   <h4><%= @user.name %></h4>
 </div>
 <div class="col-lg-12 chat-room">
-  <div class= "container messages" onscroll='loadMoreMessages()'>
+  <div class= "messages" onscroll='loadMoreMessages()'>
     <div class= "message-container message-container-<%= chat_room.uuid %>" data-user-pic-url= "<%= @user.user_pic.url(:smallthumb) %>" data-chat-room-uuid= "<%= chat_room.uuid %>" data-page-count= 1 data-load-comlete=false >
       <%= render partial:'chat_rooms/messages', locals:{ messages: chat_room.messages.page(1).per(15) } %>
     </div>
