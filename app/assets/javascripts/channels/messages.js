@@ -51,6 +51,10 @@ CreateMessageChannel = function() {
 $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   roomId = $(this).data('room-uuid');
   if (event.keyCode === 13) {
+    if (event.target.value == ''){
+      event.preventDefault();
+      return;
+    }
     App.messages.speak(event.target.value, roomId);
     event.target.value = "";
     event.preventDefault();
