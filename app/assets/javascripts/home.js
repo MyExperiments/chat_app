@@ -171,7 +171,36 @@ $(document).on('turbolinks:load', function() {
 
 // scrollDown
 function scrollDown(){
-  var wtf    = $('.messages');
-  var height = wtf[0].scrollHeight;
-  wtf.scrollTop(height);
+  var messageDiv   = $('.messages');
+  var height = messageDiv[0].scrollHeight;
+  messageDiv.scrollTop(height);
 }
+
+//Load previous messages on scroll up
+function loadMoreMessages(){
+  if ($('.messages').scrollTop() == 0 ){
+    if($(".message-container").data('load-comlete') == true){
+      return
+    }
+    var chatRoomUuid = $(".message-container").data('chat-room-uuid');
+    var PageNumber = $(".message-container").data('page-count');
+    $(".message-container").data('page-count', PageNumber + 1);
+    var old_height = $('.messages')[0].scrollHeight;
+    $.ajax({
+      type:'GET',
+      url:'/chat_rooms/chat_room_messages',
+      data: { chat_room_uuid: chatRoomUuid, page: PageNumber },
+      success: function(result, status, xhr){ 
+        if (xhr.getResponseHeader('Content-Type') === 'application/json; charset=utf-8') {
+          $(".message-container").data('load-comlete', true);
+        }
+        else{
+          $(".message-container").prepend(result);
+          $('.messages').scrollTop($('.messages')[0].scrollHeight - old_height); 
+        }
+      }
+    });
+  }
+}
+
+

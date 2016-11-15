@@ -11,17 +11,15 @@ CreateMessageChannel = function(roomId) {
       if(data['type'] == 'message'){
         var activeChatRoom = $('.message-container').data('chat-room-uuid');
         if (data['user_id'] != currentUserId){
-          var imageSrc = $('.message-container').data('user-pic-url');
-          var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">' + data['message'] + '</span></div></div></div>';
+          appendReceivedMessage(data['message'], data['chat_room_uuid']);
           if (activeChatRoom != data['chat_room_uuid']){
             appendBadge(data['user_id']);
           }
         }
         else{
-          var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + data['message'] + '</span></div></div>'
-        }
-       $('.message-container-' + data['chat_room_uuid']).append(message);
-       scrollDown();
+          appendSendMessage(data['message'], data['chat_room_uuid']);
+        }  
+        scrollDown();
       }
       else{
         if (data['user_id'] == currentUserId){
@@ -63,7 +61,7 @@ $(document).on('keypress', '[data-behavior~=room-speaker]', function(event) {
   }
 });
 
-//append badge
+// append badge
 function appendBadge(userId){
   var chatRoomLink = $('.chat-room-link-' + userId);
   var messageCount = chatRoomLink.data('message-count') + 1;
@@ -77,4 +75,18 @@ function scrollDown(){
   var wtf    = $('.messages');
   var height = wtf[0].scrollHeight;
   wtf.scrollTop(height);
+}
+
+// append received message to chat room
+function appendReceivedMessage(messageContent, chatRoomuuid){
+  var imageSrc = $('.message-container').data('user-pic-url');
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">' + messageContent + '</span></div></div></div>';
+  $('.message-container-' + chatRoomuuid).append(message);
+}
+
+// append sent message to chat room
+function appendSendMessage(messageContent, chatRoomuuid){
+  var imageSrc = $('.user-profile-pic').attr('src');
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + messageContent + '</span><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
+  $('.message-container-' + chatRoomuuid).append(message);
 }

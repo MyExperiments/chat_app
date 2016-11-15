@@ -47,7 +47,7 @@
         <%= link_to 'ChatApp', root_path, class: 'navbar-brand' %>
         <% if user_signed_in? %>
           <span class="pull-right m-t-15">
-            <%= image_tag current_user.user_pic.url(:smallthumb), class: "img-circle" %>
+            <%= image_tag current_user.user_pic.url(:smallthumb), class: "img-circle user-profile-pic" %>
             <%= current_user.email %>
             <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
           </span>
@@ -59,7 +59,6 @@
         </div>
       </div>
     </div>
-
     <div class="container">
       <div class="row content">
         <%= bootstrap_flash %>

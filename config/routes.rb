@@ -24,7 +24,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :chat_rooms, only: [:show, :create]
+  resources :chat_rooms, only: [:show, :create] do
+    collection do
+      get 'chat_room_messages'
+    end
+  end
 
   namespace :api do
     namespace :v1 do

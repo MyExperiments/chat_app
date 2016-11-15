@@ -30,6 +30,9 @@ gem 'redis', '~> 3.0'
 gem 'neo4j'
 # Use Paperclip image
 gem 'paperclip', '~> 5.0.0'
+# Use kaminari for pagination
+gem 'kaminari'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
