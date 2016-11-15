@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   include ChatRoomInitializer
   before_action :select_nodes, only: [:friend_request, :cancel_request,
                                       :accept_request, :unfriend_user]
-  before_action :current_user_chat_rooms, only: [:friends_list]
+  before_action :current_user_chat_rooms, only: :friends_list
   before_action :initialize_friends, only: [:friends_list, :users_list]
 
   # GET#friend_request /users
