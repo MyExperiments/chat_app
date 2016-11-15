@@ -180,7 +180,7 @@ function scrollDown(){
 function loadMoreMessages(){
   if ($('.messages').scrollTop() == 0 ){
     if($(".message-container").data('load-comlete') == true){
-      return
+      return;
     }
     var chatRoomUuid = $(".message-container").data('chat-room-uuid');
     var PageNumber = $(".message-container").data('page-count');

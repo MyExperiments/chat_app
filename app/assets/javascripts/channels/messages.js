@@ -1,8 +1,7 @@
 // Create message channel
-CreateMessageChannel = function(roomId) {
+CreateMessageChannel = function() {
   App.messages = App.cable.subscriptions.create({
-    channel: "MessagesChannel",
-    roomId: roomId
+    channel: "MessagesChannel"
   }, {
     connected: function() {},
     disconnected: function() {},
