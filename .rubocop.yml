@@ -28,5 +28,5 @@ Metrics/LineLength:
 Style/AccessorMethodName:
    Enabled: false
 Metrics/AbcSize:
-  Max: 18
+  Max: 21
 

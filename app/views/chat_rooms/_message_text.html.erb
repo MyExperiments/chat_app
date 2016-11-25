@@ -1,0 +1,17 @@
+<% if message.user.id == current_user.id %>
+  <div class="col-lg-12 message-content message-content-sender">
+    <span class="send-message"><%= message.content %></span>
+    <span><%= image_tag message.user.user_pic.url(:smallthumb), class: "img-circle" %></span>
+  </div>
+  <% if last_seen_message.id == message.id %>
+    <div class="col-md-12 last-seen" data-seen-at="<%= last_seen_duration(last_seen_message.updated_at) %>" >&#10004; seen <%= last_seen_time(last_seen_message.updated_at) %></div>
+    <% if last_seen_message.updated_at + 1.hours >= Time.now %>
+      <script>setInterval(updateSeenStatus, 60000);</script>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="col-lg-12 message-content message-content-receiver">
+    <span><%= image_tag message.user.user_pic.url(:smallthumb), class: "img-circle" %></span>
+    <span class="received-message"><%= message.content %></span>
+  </div>
+<% end %>

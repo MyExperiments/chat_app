@@ -43,16 +43,15 @@
 .send-message{
   border-radius: 5px;
   padding: 5px 5px 5px 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .send-message{
-  border: 1px solid #817CAC;
-  background-color: #817CAC;
-  color: #fff;
+  background-color: white;
   text-align: right;
 }
 .received-message{
-  border: 1px solid #E8EBF0;
-  background-color: #E8EBF0;
+  background-color: white;
 }
 .message-content-sender{
   text-align: right;

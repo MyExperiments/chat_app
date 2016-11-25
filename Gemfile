@@ -32,6 +32,8 @@ gem 'neo4j'
 gem 'paperclip', '~> 5.0.0'
 # Use kaminari for pagination
 gem 'kaminari'
+# Use carrierwave
+gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

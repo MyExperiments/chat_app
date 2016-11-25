@@ -17,18 +17,42 @@ CreateMessageChannel = function() {
         }
         else{
           appendSendMessage(data['message'], data['chat_room_uuid']);
+
         }  
         scrollDown();
+      }
+      else if(data['type'] == 'attachment'){
+        if (data['user_id'] == currentUserId){
+          if(data['content_type'].startsWith("image/")){
+            var messageContent = '<img id="image" src='+ data['url'] + ' class="attached-image" />';
+            appendSendAttachment(messageContent, data['chat_room_uuid']);
+          }
+          else{
+            var messageContent = '<video class="attached-video" controls><source src=' + data['url'] + ' type="video/mp4"></video>';
+            appendSendAttachment(messageContent, data['chat_room_uuid']);
+          }
+          scrollDown();
+        }
+        else{
+          if(data['content_type'].startsWith("image/")){
+            var messageContent = '<img id="image" src='+ data['url'] + ' class="attached-image recived-attachment" />';
+            appendReceivedAttachment(messageContent, data['chat_room_uuid']);
+          }
+          else{
+            var messageContent = '<video class="attached-video recived-attachment" controls><source src=' + data['url'] + ' type="video/mp4"></video>';
+            appendReceivedAttachment(messageContent, data['chat_room_uuid']);
+          }
+          scrollDown();
+        }
+      }
+      else if(data['type'] == 'read_status'){
+        appendReadstatus();
       }
       else{
         if (data['user_id'] == currentUserId){
           return;
         }
-        var message = '<div class="col-lg-12 msgbody"><span>' + data['user'] + ': </span><span>' + ' is typing' + '</span></div>';
-        var $isTyping = $('.is-typing-' + data['chat_room_uuid']);
-        $isTyping.show();
-        $isTyping.html(message);
-        $isTyping.delay(2000).hide(0);
+        showIsTypingStatus(data['chat_room_uuid']);
       }
     },
     speak: function(message, roomId) {
@@ -92,4 +116,35 @@ function appendSendMessage(messageContent, chatRoomuuid){
   var imageSrc = $('.user-profile-pic').attr('src');
   var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + messageContent + '</span><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
   $('.message-container-' + chatRoomuuid).append(message);
+}
+
+// show is typing status
+function showIsTypingStatus(chatRoomuuid){
+  var imageSrc = $('.message-container').data('user-pic-url');
+  var status = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">is typing..</span></div></div></div>';
+  var $isTyping = $('.is-typing-' + chatRoomuuid);
+  $isTyping.show();
+  $isTyping.html(status);
+  $isTyping.delay(2000).hide(0);
+}
+
+// append sent attachment to chat room
+function appendSendAttachment(messageContent, chatRoomuuid){
+  var imageSrc = $('.user-profile-pic').attr('src');
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender">' + messageContent + '<span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
+  $('.message-container-' + chatRoomuuid).append(message);
+}
+
+// append received message to chat room
+function appendReceivedAttachment(messageContent, chatRoomuuid){
+  var imageSrc = $('.message-container').data('user-pic-url');
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span>' + messageContent + '</div></div></div>';
+  $('.message-container-' + chatRoomuuid).append(message);
+}
+
+// change read status position to bottom
+function appendReadstatus(){
+  $('.last-seen').remove();
+  var html = '<div class="col-md-12 last-seen" data-seen-at="0" >&#10004; seen just now </div>'
+  $('.message-content-sender:last').append(html);
 }

@@ -1,0 +1,7 @@
+<% if message.attachment.content_type.start_with?('image') %>
+  <%= image_tag message.attachment.url, class: "attached-image" %>
+<% else %>
+  <video class="attached-video recived-attachment" controls>
+    <source src="<%= message.attachment.url %>" type="video/mp4">
+  </video>
+<% end %>

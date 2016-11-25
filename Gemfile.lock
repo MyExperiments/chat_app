@@ -59,6 +59,10 @@ GEM
     capybara-screenshot (1.0.14)
       capybara (>= 1.0, < 3)
       launchy
+    carrierwave (1.0.0.rc)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cliver (0.3.2)
@@ -311,6 +315,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-screenshot
+  carrierwave (>= 1.0.0.rc, < 2.0)
   coffee-rails (~> 4.2)
   database_cleaner
   devise

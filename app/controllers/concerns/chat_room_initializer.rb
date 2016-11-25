@@ -62,15 +62,9 @@ module ChatRoomInitializer
 
   # find userwise unread message count
   def unread_messages
-    @user_wise_unread_messages = {}
-    @chat_rooms.each do |chat_room|
-      user_id = chat_room.chat_room_users
-                         .where.not(user_id: current_user.id)
-                         .first.user_id
-      unread_message_count = chat_room.messages
-                                      .where.not(user_id: current_user.id)
-                                      .where(is_read: 0).count
-      @user_wise_unread_messages[user_id] = unread_message_count
-    end
+    @user_wise_unread_messages = current_user.user_messages
+                                             .where(is_read: false)
+                                             .joins(:message)
+                                             .group('messages.user_id').count
   end
 end

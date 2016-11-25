@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   resources :chat_rooms, only: [:show, :create] do
     collection do
       get 'chat_room_messages'
+      get 'delete_conversation'
+      post 'upload_attachment'
     end
   end
 

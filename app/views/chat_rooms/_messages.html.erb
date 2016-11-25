@@ -1,15 +1,9 @@
 <% messages.each do |message| %>
   <div class="col-lg-12 message-content">
-    <% if message.user.id == current_user.id %>
-      <div class="col-lg-12 message-content message-content-sender">
-        <span class="send-message"><%= message.content %></span>
-        <span><%= image_tag message.user.user_pic.url(:smallthumb), class: "img-circle" %></span>
-      </div>
+    <% if message.attachment.present? %>
+      <%= render partial: 'chat_rooms/message_attachment', locals: { message: message, last_seen_message: last_seen_message } %>
     <% else %>
-      <div class="col-lg-12 message-content message-content-receiver">
-        <span><%= image_tag message.user.user_pic.url(:smallthumb), class: "img-circle" %></span>
-        <span class="received-message"><%= message.content %></span>
-      </div>
+      <%= render partial: 'chat_rooms/message_text', locals: { message: message, last_seen_message: last_seen_message } %>
     <% end %>
   </div>
 <% end %>

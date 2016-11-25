@@ -6,6 +6,10 @@
 class User < ApplicationRecord
   after_create :create_user_node
   after_update :update_user_node, if: :name_changed?
+
+  has_many :user_messages, dependent: :destroy
+  has_many :messages, through: :user_messages
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
