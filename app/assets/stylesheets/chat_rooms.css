@@ -21,6 +21,7 @@
   border-radius: 10px; 
   resize: none;
   padding-right: 30px;
+  padding-left: 45px;
 }
 
 .is-typing{
@@ -32,7 +33,7 @@
   padding-left: 14px;
 }
 .message-content{
-  margin-top: 5px;
+  margin-top: 8px;
 }
 .chat-room-title{
   background-color: #0063A8;
@@ -146,4 +147,37 @@ input[type="file"].attachment_upload{
   font-size: 10px;
   padding-top: 10px;
   color: #797979;
+}
+.emojiPickerIcon{
+  left: 0;
+}
+.sent-message-time{
+  font-size: 9px;
+  color: #797979;
+  padding-left: 8px;
+  position: absolute;
+  top: 30px;
+  right: 60px;
+}
+.received-message-time{
+  font-size: 9px;
+  color: #797979;
+  padding-left: 8px;
+  position: absolute;
+  top: 30px;
+  left: 60px;
+}
+.received-attachment-time{
+  font-size: 9px;
+  color: #797979;
+  display: inline-block;
+  width: 100%;
+  padding-left: 50px;
+}
+.sent-attachment-time{
+  font-size: 9px;
+  color: #797979;
+  display: inline-block;
+  width: 100%;
+  padding-right: 50px;
 }

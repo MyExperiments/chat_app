@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123105315) do
+ActiveRecord::Schema.define(version: 20161128103706) do
 
   create_table "chat_room_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -22,20 +22,20 @@ ActiveRecord::Schema.define(version: 20161123105315) do
   end
 
   create_table "chat_rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "uuid"
-    t.string   "title"
-    t.string   "is_group_chat"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "uuid",          limit: 255
+    t.string   "title",         limit: 255
+    t.string   "is_group_chat", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "chat_room_id"
-    t.text     "content",      limit: 65535
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "attachment"
+    t.string   "content",                               collation: "utf8mb4_bin"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "attachment",   limit: 255
     t.index ["chat_room_id"], name: "index_messages_on_chat_room_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -49,26 +49,23 @@ ActiveRecord::Schema.define(version: 20161123105315) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "authentication_token"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "authentication_token",   limit: 255
     t.boolean  "online"
-    t.string   "name"
-    t.string   "user_pic_file_name"
-    t.string   "user_pic_content_type"
-    t.integer  "user_pic_file_size"
-    t.datetime "user_pic_updated_at"
+    t.string   "name",                   limit: 255
     t.integer  "gender"
+    t.string   "user_pic",               limit: 255
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

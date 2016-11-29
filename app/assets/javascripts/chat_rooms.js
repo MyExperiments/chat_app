@@ -48,7 +48,6 @@ $(document).on('turbolinks:load', function() {
       }
       else if(file.startsWith("video/")){
         var videoThumbUrl = $('.video-thumb ').attr("src");
-        console.log(videoThumbUrl);
         $('.attatchment-image').attr("src", videoThumbUrl);
         $('.message-textarea').height(180);
         appendUploadLink();
@@ -116,5 +115,4 @@ function updateSeenStatus(){
   }
   $('.last-seen').data('seen-at',statusTime);
   $('.last-seen').html('&#10004; seen ' + statusTime + ' minutes ago');
-  setInterval(updateSeenStatus, 60000);
 }

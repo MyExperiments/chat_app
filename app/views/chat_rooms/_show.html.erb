@@ -33,7 +33,7 @@
         <div class= "col-md-10">
           <div class= "row">
             <div class="col-md-11 message-textarea-container">
-              <textarea class="message-textarea" data-room-id="<%= @chat_room.id %>" data-behavior="room-speaker" data-room-uuid="<%= @chat_room.uuid %>" data-current-user-id="<%= current_user.id %>" data-emoji-input="unicode"></textarea>
+                <textarea class="message-textarea" data-room-id="<%= @chat_room.id %>" data-behavior="room-speaker" data-room-uuid="<%= @chat_room.uuid %>" data-current-user-id="<%= current_user.id %>" data-emojiable = true ></textarea>
               <img id="image" class="attatchment-image" />
               <a href="#" class="upload-button"><img id="image" class="upload-image"/></a>
               <a href="#" class="remove-attachment-button"><img id="image" class="remove-image"/></a>
@@ -60,5 +60,9 @@
     content: function() {
       return $('#popover_content_wrapper').html();
     }
+  });
+
+  $('textarea').emojiPicker({
+    height: '200px',
   });
 </script>

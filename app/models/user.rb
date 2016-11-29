@@ -14,11 +14,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  # paper clip image
-  has_attached_file :user_pic, styles: {
-    medium: '300x300#', thumb: '100x100#', smallthumb: '34x34#'
-  }, default_url: '/images/default_:style.png'
-  validates_attachment_content_type :user_pic, content_type: %r{\Aimage\/.*\z}
+  # mount carrier wave attchment uploader
+  mount_uploader :user_pic, UserPicUploader
 
   # set authentication token and requested at
   def set_authentication_token(token = Devise.friendly_token)

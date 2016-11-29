@@ -14,4 +14,15 @@ module ChatRoomsHelper
   def last_seen_duration(t)
     ((Time.now - t) / 60).floor
   end
+
+  # message time
+  def message_time(t)
+    if t.today?
+      t.strftime('%H:%M')
+    elsif t.to_date == Date.yesterday
+      "yesterday at #{t.strftime('%H:%M')}"
+    else
+      t.strftime('%d %b %H:%M')
+    end
+  end
 end

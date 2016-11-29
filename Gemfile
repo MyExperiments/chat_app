@@ -26,7 +26,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
-# Use Neo4j Graph databse
+# Use Neo4j Graph database
 gem 'neo4j'
 # Use Paperclip image
 gem 'paperclip', '~> 5.0.0'
@@ -34,6 +34,10 @@ gem 'paperclip', '~> 5.0.0'
 gem 'kaminari'
 # Use carrierwave
 gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
+# Use Minimagic
+gem 'mini_magick'
+# Use emoji parsing
+gem 'gemoji'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

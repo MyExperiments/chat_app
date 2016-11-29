@@ -18,8 +18,7 @@ class ChatRoomsController < ApplicationController
     initialize_chat_room
     @user = @chat_room.chat_room_users.where.not(user_id: current_user.id).first.user
     @messages = current_user.messages.where(chat_room_id: @chat_room.id)
-                            .includes(:user)
-                            .order('created_at DESC').page(1).per(15)
+                            .includes(:user).page(1).per(200)
     find_last_seen_message(@chat_room.id)
     set_read_flag
     broadcast_read_status
@@ -35,7 +34,7 @@ class ChatRoomsController < ApplicationController
   def chat_room_messages
     @messages = current_user.messages
                             .where(chat_room_id: params[:chat_room_id])
-                            .includes(:user).order('created_at DESC').page(params[:page]).per(15)
+                            .includes(:user).page(params[:page]).per(200)
     find_last_seen_message(params[:chat_room_id])
     if @messages.blank?
       render json: { last_page: true } if @messages.blank?

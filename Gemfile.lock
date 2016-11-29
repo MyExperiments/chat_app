@@ -105,6 +105,7 @@ GEM
       faraday_middleware
       multi_json
     ffi (1.9.14)
+    gemoji (2.1.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     httparty (0.14.0)
@@ -144,6 +145,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
+    mini_magick (4.5.1)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
@@ -322,11 +324,13 @@ DEPENDENCIES
   devise-bootstrap-views
   factory_girl_rails
   faker
+  gemoji
   jbuilder (~> 2.5)
   jquery-rails
   kaminari
   launchy
   listen (~> 3.0.5)
+  mini_magick
   mysql2
   neo4j
   paperclip (~> 5.0.0)

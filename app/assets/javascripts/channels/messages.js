@@ -106,15 +106,17 @@ function scrollDown(){
 
 // append received message to chat room
 function appendReceivedMessage(messageContent, chatRoomuuid){
+  var messageTime = getCurrentTime();
   var imageSrc = $('.message-container').data('user-pic-url');
-  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">' + messageContent + '</span></div></div></div>';
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="received-message">' + messageContent + '<span class="received-message-time">' + messageTime + '</span></span></div></div></div>';
   $('.message-container-' + chatRoomuuid).append(message);
 }
 
 // append sent message to chat room
 function appendSendMessage(messageContent, chatRoomuuid){
+  var messageTime = getCurrentTime();
   var imageSrc = $('.user-profile-pic').attr('src');
-  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + messageContent + '</span><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender"><span class="send-message">' + messageContent + '<span class="sent-message-time">'+messageTime+'</span></span><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
   $('.message-container-' + chatRoomuuid).append(message);
 }
 
@@ -130,15 +132,17 @@ function showIsTypingStatus(chatRoomuuid){
 
 // append sent attachment to chat room
 function appendSendAttachment(messageContent, chatRoomuuid){
+  var messageTime = getCurrentTime();
   var imageSrc = $('.user-profile-pic').attr('src');
-  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender">' + messageContent + '<span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span></div></div>';
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-sender">' + messageContent + '<span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span><span class="sent-attachment-time">' + messageTime + '</span></div></div>';
   $('.message-container-' + chatRoomuuid).append(message);
 }
 
 // append received message to chat room
 function appendReceivedAttachment(messageContent, chatRoomuuid){
+  var messageTime = getCurrentTime();
   var imageSrc = $('.message-container').data('user-pic-url');
-  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span>' + messageContent + '</div></div></div>';
+  var message = '<div class="col-lg-12 message-content"><div class="col-lg-12 message-content message-content-receiver"><span><img class="img-circle" src="' + imageSrc + '" alt="Default smallthumb"></span>' + messageContent + '<span class="received-attachment-time">' + messageTime + '<span></div></div></div>';
   $('.message-container-' + chatRoomuuid).append(message);
 }
 
@@ -147,4 +151,11 @@ function appendReadstatus(){
   $('.last-seen').remove();
   var html = '<div class="col-md-12 last-seen" data-seen-at="0" >&#10004; seen just now </div>'
   $('.message-content-sender:last').append(html);
+  setInterval(updateSeenStatus, 60000);
+}
+function getCurrentTime(){
+  var d = new Date();
+  var hour = d.getHours();
+  var minutes = d.getMinutes();
+  return hour + ':' + minutes
 }
