@@ -5,7 +5,7 @@
 #
 class ChatRoomsController < ApplicationController
   include ChatRoomInitializer
-
+  around_action :set_time_zone
   before_action :current_user_chat_rooms, only: [:create, :unread_messages]
 
   def show

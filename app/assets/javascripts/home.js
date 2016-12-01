@@ -202,5 +202,24 @@ function loadMoreMessages(){
     });
   }
 }
+// set user location
+function setLocation(){
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      updateUserLocation
+    );
+  }
+}
+// Ajax request for updating user location
+function updateUserLocation(position) {
+  $.ajax({
+    type:'GET',
+    url:'/users/update_location',
+    data: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+    success: function(result){ 
+    }
+  });
+}
+
 
 

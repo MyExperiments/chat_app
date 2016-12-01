@@ -38,7 +38,10 @@ gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
 gem 'mini_magick'
 # Use emoji parsing
 gem 'gemoji'
-
+# Use timezone
+gem 'timezone'
+# Use sidekiq for queuing messages
+gem 'sidekiq'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

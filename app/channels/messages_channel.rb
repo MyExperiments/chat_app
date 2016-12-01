@@ -19,15 +19,8 @@ class MessagesChannel < ApplicationCable::Channel
   def speak(data)
     @chat_room = find_chat_room(data['room_id'])
     return if @chat_room.blank?
-
-    Message.create(
-      user_id: current_user.id,
-      chat_room_id: @chat_room.id,
-      content: data['message']
-    )
-    broadcast('message', data['message'])
-  rescue
-    return
+    # sidekiq worker for saving and broadcasting message
+    MessageWorker.perform_async(current_user.id, @chat_room.id, data['message'])
   end
 
   # Broadcast user is typing something

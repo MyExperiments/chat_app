@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'friends_list'
       get 'users_list'
       get 'friend_requests'
+      get 'update_location'
     end
   end
 
@@ -44,4 +45,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   mount Apidoco::Engine, at: '/docs'
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

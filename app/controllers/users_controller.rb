@@ -92,6 +92,14 @@ class UsersController < ApplicationController
     render partial: 'users/friend_request', locals: { users: @friend_requests }
   end
 
+  # GET#friend_request /users
+  def update_location
+    @user_location = UserLocation.find_or_create_by(user_id: current_user.id)
+    time_zone = Timezone.lookup(params[:latitude], params[:longitude])
+    @user_location.update(time_zone: time_zone)
+    render json: { status: 'success' }
+  end
+
   private
 
   # find mutual friends
