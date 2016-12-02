@@ -79,8 +79,14 @@ $(document).on('turbolinks:load', function() {
       contentType: false,
       cache: false,
       processData: false,
+      beforeSend: function(){
+        $('.message-textarea').prop("disabled", true);
+        var uploadingIconUrl = $('.uploading-icon').attr("src");
+        $('.upload-image').attr("src",uploadingIconUrl);
+      },
       success: function(result){ 
         removeAttachment();
+        $('.message-textarea').prop("disabled", false);
       }
     }); 
   });

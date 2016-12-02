@@ -17,8 +17,7 @@ class ChatRoomsController < ApplicationController
   def create
     initialize_chat_room
     @user = @chat_room.chat_room_users.where.not(user_id: current_user.id).first.user
-    @messages = current_user.messages.where(chat_room_id: @chat_room.id)
-                            .includes(:user).page(1).per(200)
+    find_first_message_page
     find_last_seen_message(@chat_room.id)
     set_read_flag
     broadcast_read_status
@@ -32,14 +31,18 @@ class ChatRoomsController < ApplicationController
 
   # GET #chat_room_messages /chat_rooms
   def chat_room_messages
-    @messages = current_user.messages
-                            .where(chat_room_id: params[:chat_room_id])
-                            .includes(:user).page(params[:page]).per(200)
+    find_next_message_page(params[:last_message_id])
     find_last_seen_message(params[:chat_room_id])
     if @messages.blank?
       render json: { last_page: true } if @messages.blank?
     else
-      render partial: 'chat_rooms/messages', locals: { messages: @messages, last_seen_message: @last_seen_message }
+      html_code = render_to_string(
+        '_messages',
+        formats: [:html],
+        layout: false,
+        locals: { messages: @messages, last_seen_message: @last_seen_message, last_page: false }
+      )
+      render json: { html_code: html_code, last_message_id: @messages.first.id }
     end
   end
 
@@ -99,5 +102,21 @@ class ChatRoomsController < ApplicationController
                                 .where(messages: { user_id: current_user }, user_messages: { is_read: true })
                                 .where.not(user_messages: { user_id: current_user.id })
                                 .select('messages.id, user_messages.updated_at').last
+  end
+
+  # find first user message page
+  def find_first_message_page
+    @messages = current_user.messages.where(chat_room_id: @chat_room.id)
+                            .includes(:user).order('messages.id DESC')
+                            .page(1).per(10).reverse
+  end
+
+  # find next user message page after a particular id
+  def find_next_message_page(last_message_id)
+    @messages = current_user.messages
+                            .where(chat_room_id: params[:chat_room_id])
+                            .where('messages.id < ?', last_message_id)
+                            .includes(:user).order('messages.id DESC')
+                            .page(1).per(10).reverse
   end
 end

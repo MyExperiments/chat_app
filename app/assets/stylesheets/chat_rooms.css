@@ -118,7 +118,8 @@ input[type="file"].attachment_upload{
 }
 .video-thumb,
 .upload-icon,
-.remove-icon{
+.remove-icon,
+.uploading-icon{
   display: none;
 }
 .upload-image{

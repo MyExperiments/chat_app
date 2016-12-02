@@ -183,19 +183,19 @@ function loadMoreMessages(){
       return;
     }
     var chatRoomid = $(".message-container").data('chat-room-id');
-    var PageNumber = $(".message-container").data('page-count') + 1;
-    $(".message-container").data('page-count', PageNumber);
+    var LastMessageId = $(".message-container").data('last-message-id');
     var old_height = $('.messages')[0].scrollHeight;
     $.ajax({
       type:'GET',
       url:'/chat_rooms/chat_room_messages',
-      data: { chat_room_id: chatRoomid, page: PageNumber },
-      success: function(result, status, xhr){ 
-        if (xhr.getResponseHeader('Content-Type') === 'application/json; charset=utf-8') {
+      data: { chat_room_id: chatRoomid, last_message_id: LastMessageId },
+      success: function(result){ 
+        if (result.last_page == true) {
           $(".message-container").data('load-comlete', true);
         }
         else{
-          $(".message-container").prepend(result);
+          $(".message-container").prepend(result.html_code);
+          $(".message-container").data('last-message-id', result.last_message_id);
           $('.messages').scrollTop($('.messages')[0].scrollHeight - old_height); 
         }
       }

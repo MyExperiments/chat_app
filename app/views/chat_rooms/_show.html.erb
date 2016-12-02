@@ -19,8 +19,8 @@
         </div>
       </div>
     </div>
-    <div class= "col-md-12 messages" onscroll='loadMoreMessages()'>
-      <div class= "message-container message-container-<%= chat_room.uuid %>" data-user-pic-url= "<%= @user.user_pic.url(:smallthumb) %>" data-chat-room-uuid= "<%= chat_room.uuid %>" data-chat-room-id= "<%= chat_room.id %>" data-page-count= 1 data-load-comlete=false >
+    <div class = "col-md-12 messages" onscroll='loadMoreMessages()'>
+      <div class = "message-container message-container-<%= chat_room.uuid %>" data-user-pic-url = "<%= @user.user_pic.url(:smallthumb) %>" data-chat-room-uuid = "<%= chat_room.uuid %>" data-chat-room-id = "<%= chat_room.id %>" data-page-count = 1 data-load-comlete = false data-last-message-id = "<%= messages.first.id %>">
         <% if messages.present? %>
           <%= render partial:'chat_rooms/messages', locals:{ messages: messages, last_seen_message: last_seen_message } %>
         <% end %>
@@ -40,6 +40,7 @@
               <%= image_tag "video_thumbnail.jpg", class: 'video-thumb' %>
               <%= image_tag "remove_icon.png", class: 'remove-icon' %>
               <%= image_tag "upload_icon.png", class: 'upload-icon' %>
+              <%= image_tag "uploading_icon.gif", class: 'uploading-icon' %>
             </div>
             <div class="col-md-1 attachment-button-container">
               <button class="attachment-button" type="button" ><i class="fa fa-paperclip" aria-hidden="true"></i></button>
